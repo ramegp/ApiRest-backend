@@ -1,6 +1,6 @@
 [
 	{
-		"items": 2,
-		"item": 6
+		"items": 1,
+		"item": 4
 	}
 ]
