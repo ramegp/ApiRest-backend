@@ -1,0 +1,20 @@
+[
+    {
+        "title":"Escuadra",
+        "price":123.45,
+        "thumbnail":"url foto",
+        "id":1
+    },
+    {
+        "title":"Regla",
+        "price":123.45,
+        "thumbnail":"url foto",
+        "id":2
+    },
+    {
+        "title":"Cuaderno",
+        "price":123.45,
+        "thumbnail":"url foto",
+        "id":3
+    }
+]
