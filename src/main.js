@@ -4,7 +4,7 @@ var express = require("express");
 var fs = require("fs");
 var app = express();
 var puerto = 8080;
-var path = "./assets";
+var path = "../assets";
 var server = app.listen(puerto, function () {
     console.log("servidor inicializado en el puerto " + puerto);
 });
