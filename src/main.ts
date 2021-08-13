@@ -9,6 +9,7 @@ const path = __dirname+"/../assets";
 const server = app.listen(puerto, () => {
   console.log(`servidor inicializado en el puerto ${puerto}`);
 });
+
 const crearArchivo = (nombreArchivo: string) => {
   const visitas = [
     {

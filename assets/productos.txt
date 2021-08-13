@@ -1,20 +1,32 @@
 [
-    {
-        "title":"Escuadra",
-        "price":123.45,
-        "thumbnail":"url foto",
-        "id":1
-    },
-    {
-        "title":"Regla",
-        "price":123.45,
-        "thumbnail":"url foto",
-        "id":2
-    },
-    {
-        "title":"Cuaderno",
-        "price":123.45,
-        "thumbnail":"url foto",
-        "id":3
-    }
+	{
+		"title": "Escuadra",
+		"price": 123.45,
+		"thumbnail": "url foto",
+		"id": 1
+	},
+	{
+		"title": "Regla",
+		"price": 123.45,
+		"thumbnail": "url foto",
+		"id": 2
+	},
+	{
+		"title": "Cuaderno",
+		"price": 123.45,
+		"thumbnail": "url foto",
+		"id": 3
+	},
+	{
+		"title": "Cartuchera",
+		"price": 100,
+		"thumbnail": "url",
+		"id": 4
+	},
+	{
+		"title": "Birome",
+		"price": 10.45,
+		"thumbnail": "url foto",
+		"id": 5
+	}
 ]
