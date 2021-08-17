@@ -12,7 +12,7 @@ var server = app.listen(puerto, function () {
     console.log("servidor inicializado en el puerto " + puerto);
 });
 app.get("/api/productos/listar/:id", function (req, res) {
-    var id_search = parseInt(req.params.id.split('=')[1]);
+    var id_search = parseInt(req.params.id);
     var products = new clases_1.Archivo("productos.txt");
     var product_wanted = products.searchProductId(id_search);
     if (product_wanted) {

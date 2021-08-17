@@ -15,7 +15,8 @@ const server = app.listen(puerto, () => {
 });
 
 app.get("/api/productos/listar/:id", (req: express.Request, res: express.Response) => {
-    let id_search = parseInt(req.params.id.split('=')[1])
+    
+    let id_search = parseInt(req.params.id)
     let products = new Archivo("productos.txt");
     let product_wanted = products.searchProductId(id_search)
     if (product_wanted) {
