@@ -4,7 +4,7 @@ var express = require("express");
 var clases_1 = require("./clases");
 var app = express();
 var puerto = 8080;
-var path = __dirname + "/../assets";
+var path = __dirname + "/../../assets";
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));

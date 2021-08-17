@@ -18,13 +18,13 @@ var Archivo = /** @class */ (function () {
         this.fs = require('fs');
         this.obtenerCantidadProductos = function () {
             //Obtiene la cantidad de productos del archivo para generar el id automatico
-            var contenido = _this.fs.readFileSync(__dirname + ("/../assets/" + _this.filePath), 'utf-8');
+            var contenido = _this.fs.readFileSync(__dirname + ("/../../assets/" + _this.filePath), 'utf-8');
             return JSON.parse(contenido).length;
         };
         this.readFile = function () {
             //devuelve los productos del archivo si es que existe
             try {
-                var contenido = _this.fs.readFileSync(__dirname + ("/../assets/" + _this.filePath), 'utf-8');
+                var contenido = _this.fs.readFileSync(__dirname + ("/../../assets/" + _this.filePath), 'utf-8');
                 return JSON.parse(contenido);
             }
             catch (error) {
@@ -34,9 +34,9 @@ var Archivo = /** @class */ (function () {
         this.saveFile = function (obj) {
             //Guarda un producto en un archivo.
             var objSave = __assign(__assign({}, obj), { id: _this.obtenerCantidadProductos() + 1 });
-            var products = JSON.parse(_this.fs.readFileSync(__dirname + ("/../assets/" + _this.filePath), 'utf-8'));
+            var products = JSON.parse(_this.fs.readFileSync(__dirname + ("/../../assets/" + _this.filePath), 'utf-8'));
             products.push(objSave);
-            _this.fs.writeFileSync(__dirname + ("/../assets/" + _this.filePath), JSON.stringify(products, null, '\t'));
+            _this.fs.writeFileSync(__dirname + ("/../../assets/" + _this.filePath), JSON.stringify(products, null, '\t'));
         };
         this.deleteFile = function () {
             //Borra el archivo con todos los producos

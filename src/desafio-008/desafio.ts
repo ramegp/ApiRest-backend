@@ -4,7 +4,7 @@ import { Archivo } from "./clases";
 
 const app = express();
 const puerto = 8080;
-const path = __dirname + "/../assets";
+const path = __dirname + "/../../assets";
 
 app.use(express.json())
 app.use(express.text())
