@@ -31,13 +31,13 @@ export class Archivo {
         
     }
 
-    saveFile = (obj: Producto): void => {
+    saveFile = (obj: Producto) => {
         //Guarda un producto en un archivo.
         let objSave = { ...obj, id: this.obtenerCantidadProductos() + 1 }
         let products = JSON.parse(this.fs.readFileSync(__dirname + `/../../assets/${this.filePath}`, 'utf-8'));
         products.push(objSave)
         this.fs.writeFileSync(__dirname + `/../../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
-
+        return objSave
     }
     deleteFile = (): void => {
         //Borra el archivo con todos los producos

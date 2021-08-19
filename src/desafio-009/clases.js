@@ -37,6 +37,7 @@ var Archivo = /** @class */ (function () {
             var products = JSON.parse(_this.fs.readFileSync(__dirname + ("/../../assets/" + _this.filePath), 'utf-8'));
             products.push(objSave);
             _this.fs.writeFileSync(__dirname + ("/../../assets/" + _this.filePath), JSON.stringify(products, null, '\t'));
+            return objSave;
         };
         this.deleteFile = function () {
             //Borra el archivo con todos los producos

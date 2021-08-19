@@ -6,9 +6,9 @@ import { Archivo } from '../clases'
 
 const router = express.Router();
 
-/* router.get('/productos',(req: express.Request, res: express.Response)=>{
+router.get('/productos',(req: express.Request, res: express.Response)=>{
     res.sendFile(__path.resolve(__dirname+'/../public/index.html'))
-}) */
+})
 
 /* router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
     
@@ -54,11 +54,14 @@ router.get('/productos/actualizar/:id',(req: express.Request, res: express.Respo
     res.json({datos:products.upDateProduct(id_search,prod_to_update)})
 })
 
-router.get('/productos/actualizar',(req: express.Request, res: express.Response)=>{
-    let title = req.query.title;
-    let price = req.query.price;
-    console.log(`title ${title} price ${price}`)
-    res.send('borrara usuario'+req.params.id)
+router.get('/productos/cargar',(req: express.Request, res: express.Response)=>{
+    let obj_to_add = {
+        "title":req.query.title as string,
+        "price":parseInt(req.query.price as string),
+        "thumbnail":req.query.img as string
+    }
+    let products = new Archivo("productos.txt");
+    res.json({data: products.saveFile(obj_to_add)});
 })
 
 router.delete('/productos/borrar/:id',(req: express.Request, res: express.Response)=>{

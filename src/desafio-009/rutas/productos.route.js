@@ -5,9 +5,9 @@ var __path = require('path');
 var clases_1 = require("../clases");
 //console.log(__path.resolve(__dirname+'/../public/index.html'))
 var router = express.Router();
-/* router.get('/productos',(req: express.Request, res: express.Response)=>{
-    res.sendFile(__path.resolve(__dirname+'/../public/index.html'))
-}) */
+router.get('/productos', function (req, res) {
+    res.sendFile(__path.resolve(__dirname + '/../public/index.html'));
+});
 /* router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
     
     let id_search = parseInt(req.params.id)
@@ -48,11 +48,14 @@ router.get('/productos/actualizar/:id', function (req, res) {
     };
     res.json({ datos: products.upDateProduct(id_search, prod_to_update) });
 });
-router.get('/productos/actualizar', function (req, res) {
-    var title = req.query.title;
-    var price = req.query.price;
-    console.log("title " + title + " price " + price);
-    res.send('borrara usuario' + req.params.id);
+router.get('/productos/cargar', function (req, res) {
+    var obj_to_add = {
+        "title": req.query.title,
+        "price": parseInt(req.query.price),
+        "thumbnail": req.query.img
+    };
+    var products = new clases_1.Archivo("productos.txt");
+    res.json({ data: products.saveFile(obj_to_add) });
 });
 router["delete"]('/productos/borrar/:id', function (req, res) {
     var id_search = parseInt(req.params.id);

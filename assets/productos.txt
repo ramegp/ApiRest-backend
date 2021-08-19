@@ -28,5 +28,11 @@
 		"price": 10.45,
 		"thumbnail": "url foto",
 		"id": 5
+	},
+	{
+		"title": "pan dulce",
+		"price": 45,
+		"thumbnail": "foto pandulce",
+		"id": 6
 	}
 ]
