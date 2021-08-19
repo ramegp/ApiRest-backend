@@ -91,7 +91,6 @@ var Archivo = /** @class */ (function () {
                         index_deleted = index;
                     }
                 }
-                // @ts-ignore
                 products.splice(index_deleted, 1);
                 _this.fs.writeFileSync(__dirname + ("/../../assets/" + _this.filePath), JSON.stringify(products, null, '\t'));
                 return existe;

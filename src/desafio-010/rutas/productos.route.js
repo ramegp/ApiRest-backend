@@ -62,32 +62,4 @@ router["delete"]('/productos/borrar/:id', function (req, res) {
     var products = new clases_1.Archivo("productos.txt");
     res.json({ data: products.deletedProduct(id_search) });
 });
-//otros
-router.get("/productos/listar/:id", function (req, res) {
-    var id_search = parseInt(req.params.id);
-    var products = new clases_1.Archivo("productos.txt");
-    var product_wanted = products.searchProductId(id_search);
-    if (product_wanted) {
-        return res.json(product_wanted);
-    }
-    else {
-        return res.json({ error: 'Producto no encontrado / no existe' });
-    }
-});
-router.get("/productos/listar", function (req, res) {
-    var products = new clases_1.Archivo("productos.txt");
-    if (!products.readFile().length) {
-        //Esta vacio
-        res.json({ error: "No hay productos cargados" });
-    }
-    else {
-        res.json({ items: products.readFile() });
-    }
-});
-router.post("/productos/guardar", function (req, res) {
-    var products = new clases_1.Archivo("productos.txt");
-    var product_to_save = req.body;
-    products.saveFile(product_to_save);
-    return res.json({ msg: "Producto guardado" });
-});
 module.exports = router;

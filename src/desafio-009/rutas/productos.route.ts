@@ -70,5 +70,35 @@ router.delete('/productos/borrar/:id',(req: express.Request, res: express.Respon
     res.json({data:products.deletedProduct(id_search)})
 })
 
+//otros
+router.get("/productos/listar/:id", (req: express.Request, res: express.Response) => {
+    
+    let id_search = parseInt(req.params.id)
+    let products = new Archivo("productos.txt");
+    let product_wanted = products.searchProductId(id_search)
+    if (product_wanted) {
+        return res.json(product_wanted)
+    } else {
+        return res.json({error:'Producto no encontrado / no existe'})
+    }
+});
+
+router.get("/productos/listar", (req: express.Request, res: express.Response) => {
+    let products = new Archivo("productos.txt");
+    if (!products.readFile().length) {
+        //Esta vacio
+        res.json({error:`No hay productos cargados`})
+    } else {
+        res.json({items:products.readFile()})
+    }
+});
+
+router.post("/productos/guardar", (req: express.Request, res: express.Response) => {
+    let products = new Archivo("productos.txt");
+    let product_to_save = req.body
+    products.saveFile(product_to_save)
+    
+    return res.json({ msg: "Producto guardado" });
+});
 
 module.exports = router
