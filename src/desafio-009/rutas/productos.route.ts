@@ -6,11 +6,11 @@ import { Archivo } from '../clases'
 
 const router = express.Router();
 
-router.get('/productos',(req: express.Request, res: express.Response)=>{
+/* router.get('/productos',(req: express.Request, res: express.Response)=>{
     res.sendFile(__path.resolve(__dirname+'/../public/index.html'))
-})
+}) */
 
-router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
+/* router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
     
     let id_search = parseInt(req.params.id)
     let products = new Archivo("productos.txt");
@@ -27,7 +27,7 @@ router.get('/productos/actualizar/:id',(req: express.Request, res: express.Respo
     </head>
     <body>
         <h1>Hola</h1>
-        <form action="/api/productos/actualizar" method="GET">
+        <form action="/api/productos/actualizar/${id_search}" method="GET">
             <input type="text" name="title" id="" value="${product_wanted.title}">
             <input type="number" name="price" id="" value="${product_wanted.price}">
             <input type="submit" value=" enviar">
@@ -39,6 +39,19 @@ router.get('/productos/actualizar/:id',(req: express.Request, res: express.Respo
     } else {
         return res.json({error:'Producto no encontrado / no existe'})
     }
+}) */
+
+router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
+    
+    let id_search = parseInt(req.params.id)
+    let products = new Archivo("productos.txt");
+    let prod_to_update = {
+        "title":req.body.title,
+        "price":req.body.price,
+        "thumbnail":req.body.thumbnail
+    }
+    
+    res.json({datos:products.upDateProduct(id_search,prod_to_update)})
 })
 
 router.get('/productos/actualizar',(req: express.Request, res: express.Response)=>{
@@ -49,7 +62,9 @@ router.get('/productos/actualizar',(req: express.Request, res: express.Response)
 })
 
 router.delete('/productos/borrar/:id',(req: express.Request, res: express.Response)=>{
-    res.send('actualizara usuario'+req.params.id)
+    let id_search = parseInt(req.params.id)
+    let products = new Archivo("productos.txt");
+    res.json({data:products.deletedProduct(id_search)})
 })
 
 

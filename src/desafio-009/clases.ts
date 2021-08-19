@@ -65,14 +65,54 @@ export class Archivo {
         }
     }
 
+    upDateProduct = (id_produc:number,new_product:Producto) => {
+        let prod_to_update = this.searchProductId(id_produc);
+        if (prod_to_update){
+            prod_to_update = {...prod_to_update, title:new_product.title,price:new_product.price,id:id_produc,thumbnail:new_product.thumbnail}
+            
+            let products = this.readFile();
+            products = products.map((p:any)=>{
+                if(p.id === id_produc){
+                    p = prod_to_update
+                }
+                return p
+            })
+            this.fs.writeFileSync(__dirname + `/../../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
+            return prod_to_update
+        }else{
+            return undefined
+        }
+    }
+
+    deletedProduct = (id_produc:number)=>{
+        let existe = this.searchProductId(id_produc)
+        if(existe){
+            let products = this.readFile();
+            let index_deleted:number;
+            //products.splice(,1)
+            //console.log(products.findIndex((p:any)=>{p.id = id_produc}))
+            for (let index = 0; index < products.length; index++) {
+                if (products[index].id === id_produc) {
+                    index_deleted = index
+                } 
+            }
+            products.splice(index_deleted,1)
+            this.fs.writeFileSync(__dirname + `/../../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
+            return existe
+        }else{
+            return 'error, no existe el id'
+        }
+    }
 
 }
-
-/* let arch = new Archivo("productos.txt");
+/* 
+let arch = new Archivo("productos.txt");
 
 console.log(arch.readFile())
-console.log(arch.searchProductId(5));
- */
+arch.deletedProduct(3) */
+/* console.log(arch.upDateProduct(2,{"title":"Salamin","price":1000,"thumbnail" : "url foto"}));
+console.log(arch.readFile()) */
+
 /* arch.saveFile({
     title: "Cartuchera",
     price: 100,

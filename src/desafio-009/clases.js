@@ -60,16 +60,56 @@ var Archivo = /** @class */ (function () {
                 return products_Aux.find(function (e) { return e.id == num; });
             }
         };
+        this.upDateProduct = function (id_produc, new_product) {
+            var prod_to_update = _this.searchProductId(id_produc);
+            if (prod_to_update) {
+                prod_to_update = __assign(__assign({}, prod_to_update), { title: new_product.title, price: new_product.price, id: id_produc, thumbnail: new_product.thumbnail });
+                var products = _this.readFile();
+                products = products.map(function (p) {
+                    if (p.id === id_produc) {
+                        p = prod_to_update;
+                    }
+                    return p;
+                });
+                _this.fs.writeFileSync(__dirname + ("/../../assets/" + _this.filePath), JSON.stringify(products, null, '\t'));
+                return prod_to_update;
+            }
+            else {
+                return undefined;
+            }
+        };
+        this.deletedProduct = function (id_produc) {
+            var existe = _this.searchProductId(id_produc);
+            if (existe) {
+                var products = _this.readFile();
+                var index_deleted = void 0;
+                //products.splice(,1)
+                //console.log(products.findIndex((p:any)=>{p.id = id_produc}))
+                for (var index = 0; index < products.length; index++) {
+                    if (products[index].id === id_produc) {
+                        index_deleted = index;
+                    }
+                }
+                products.splice(index_deleted, 1);
+                _this.fs.writeFileSync(__dirname + ("/../../assets/" + _this.filePath), JSON.stringify(products, null, '\t'));
+                return existe;
+            }
+            else {
+                return 'error, no existe el id';
+            }
+        };
         this.filePath = path;
     }
     return Archivo;
 }());
 exports.Archivo = Archivo;
-/* let arch = new Archivo("productos.txt");
+/*
+let arch = new Archivo("productos.txt");
 
 console.log(arch.readFile())
-console.log(arch.searchProductId(5));
- */
+arch.deletedProduct(3) */
+/* console.log(arch.upDateProduct(2,{"title":"Salamin","price":1000,"thumbnail" : "url foto"}));
+console.log(arch.readFile()) */
 /* arch.saveFile({
     title: "Cartuchera",
     price: 100,

@@ -6,8 +6,8 @@
 		"id": 1
 	},
 	{
-		"title": "Regla",
-		"price": 123.45,
+		"title": "panceta",
+		"price": 152,
 		"thumbnail": "url foto",
 		"id": 2
 	},
