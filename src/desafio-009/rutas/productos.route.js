@@ -38,7 +38,7 @@ router.get('/productos', function (req, res) {
         return res.json({error:'Producto no encontrado / no existe'})
     }
 }) */
-router.get('/productos/actualizar/:id', function (req, res) {
+router.put('/productos/actualizar/:id', function (req, res) {
     var id_search = parseInt(req.params.id);
     var products = new clases_1.Archivo("productos.txt");
     var prod_to_update = {

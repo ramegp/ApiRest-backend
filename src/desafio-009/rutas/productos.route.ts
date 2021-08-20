@@ -41,7 +41,7 @@ router.get('/productos',(req: express.Request, res: express.Response)=>{
     }
 }) */
 
-router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
+router.put('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
     
     let id_search = parseInt(req.params.id)
     let products = new Archivo("productos.txt");

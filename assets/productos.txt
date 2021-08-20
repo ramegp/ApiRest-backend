@@ -6,9 +6,9 @@
 		"id": 1
 	},
 	{
-		"title": "panceta",
-		"price": 152,
-		"thumbnail": "url foto",
+		"title": "Holaaaaaaaa",
+		"price": 0,
+		"thumbnail": "Bilardo",
 		"id": 2
 	},
 	{
