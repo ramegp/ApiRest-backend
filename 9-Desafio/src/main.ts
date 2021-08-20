@@ -6,7 +6,7 @@ import * as fs from "fs";
 const app = express();
 const puerto = 8080;
 
-const path = __dirname + "/../../assets";
+const path = __dirname + "/../assets";
 const api = require('./rutas/productos.route');
 
 app.use(express.json())
