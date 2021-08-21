@@ -15,7 +15,7 @@ export class Archivo {
 
     private obtenerCantidadProductos = () => {
         //Obtiene la cantidad de productos del archivo para generar el id automatico
-        let contenido = this.fs.readFileSync(__dirname + `/../../assets/${this.filePath}`, 'utf-8')
+        let contenido = this.fs.readFileSync(__dirname + `/../assets/${this.filePath}`, 'utf-8')
         return JSON.parse(contenido).length
     }
 
@@ -23,7 +23,7 @@ export class Archivo {
         //devuelve los productos del archivo si es que existe
         
         try {
-            let contenido = this.fs.readFileSync(__dirname + `/../../assets/${this.filePath}`, 'utf-8');
+            let contenido = this.fs.readFileSync(__dirname + `/../assets/${this.filePath}`, 'utf-8');
             return JSON.parse(contenido)
         } catch (error) {
             return []
@@ -34,9 +34,9 @@ export class Archivo {
     saveFile = (obj: Producto) => {
         //Guarda un producto en un archivo.
         let objSave = { ...obj, id: this.obtenerCantidadProductos() + 1 }
-        let products = JSON.parse(this.fs.readFileSync(__dirname + `/../../assets/${this.filePath}`, 'utf-8'));
+        let products = JSON.parse(this.fs.readFileSync(__dirname + `/../assets/${this.filePath}`, 'utf-8'));
         products.push(objSave)
-        this.fs.writeFileSync(__dirname + `/../../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
+        this.fs.writeFileSync(__dirname + `/../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
         return objSave
     }
     deleteFile = (): void => {
@@ -77,7 +77,7 @@ export class Archivo {
                 }
                 return p
             })
-            this.fs.writeFileSync(__dirname + `/../../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
+            this.fs.writeFileSync(__dirname + `/../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
             return prod_to_update
         }else{
             return undefined
@@ -98,7 +98,7 @@ export class Archivo {
             }
             // @ts-ignore
             products.splice(index_deleted,1) 
-            this.fs.writeFileSync(__dirname + `/../../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
+            this.fs.writeFileSync(__dirname + `/../assets/${this.filePath}`, JSON.stringify(products, null, '\t'))
             return existe
         }else{
             return 'error, no existe el id'

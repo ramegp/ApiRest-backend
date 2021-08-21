@@ -1,5 +1,30 @@
-<h1>probando</h1>
+<head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
 
-{{#each productos}}
-<p>{{this.name}}</p>
-{{/each}}
+<div class="container-fluid">
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Img</th>
+        </tr>
+  </thead>
+  <tbody>
+        {{#each productos}}
+            <tr>
+                <th scope="row">{{this.id}}</th>
+                <td>{{this.title}}</td>
+                <td>{{this.price}}</td>
+                <td><img src={{this.thumbnail}} alt="" style="width: 50px;"></td>
+            </tr>
+        {{/each}}
+        
+  </tbody>
+</table>
+
+</div>

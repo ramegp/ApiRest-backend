@@ -2,37 +2,43 @@
 	{
 		"title": "Escuadra",
 		"price": 123.45,
-		"thumbnail": "url foto",
+		"thumbnail": "https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png",
 		"id": 1
 	},
 	{
 		"title": "Holaaaaaaaa",
 		"price": 0,
-		"thumbnail": "Bilardo",
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/draw-and-design/512/esquadra-2-512.png",
 		"id": 2
 	},
 	{
 		"title": "Cuaderno",
 		"price": 123.45,
-		"thumbnail": "url foto",
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo2-04-512.png",
 		"id": 3
 	},
 	{
 		"title": "Cartuchera",
 		"price": 100,
-		"thumbnail": "url",
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/basic-flat-icon-set/128/pencil-512.png",
 		"id": 4
 	},
 	{
 		"title": "Birome",
 		"price": 10.45,
-		"thumbnail": "url foto",
+		"thumbnail": "https://cdn0.iconfinder.com/data/icons/graphic-design-tools-5/128/_eraser-512.png",
 		"id": 5
 	},
 	{
 		"title": "pan dulce",
 		"price": 45,
-		"thumbnail": "foto pandulce",
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/bakery-kitchen-3/512/soda-bread-baking-512.png",
 		"id": 6
+	},
+	{
+		"title": "Espada",
+		"price": 236,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Sword-512.png",
+		"id": 7
 	}
 ]
