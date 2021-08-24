@@ -29,9 +29,6 @@ router.put('/productos/actualizar/:id',(req: express.Request, res: express.Respo
         "price":req.body.price,
         "thumbnail":req.body.thumbnail
     }
-    console.log(req.params)
-    console.log(req.body)
-    console.log(req.query)
     res.json({datos:products.upDateProduct(id_search,prod_to_update)})
 })
 

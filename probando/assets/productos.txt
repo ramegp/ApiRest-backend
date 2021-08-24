@@ -18,7 +18,7 @@
 		"id": 3
 	},
 	{
-		"title": "Cartuchera",
+		"title": "Lapiz",
 		"price": 100,
 		"thumbnail": "https://cdn2.iconfinder.com/data/icons/basic-flat-icon-set/128/pencil-512.png",
 		"id": 4
@@ -37,7 +37,7 @@
 	},
 	{
 		"title": "Espada",
-		"price": 236,
+		"price": 23,
 		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Sword-512.png",
 		"id": 7
 	}

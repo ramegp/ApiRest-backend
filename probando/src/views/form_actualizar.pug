@@ -5,12 +5,12 @@ html
         title Actualizar producto por formulario 
     body 
         div(class="container-fluid d-flex justify-content-center align-items-center mt-4")
-            form(action=`/api/productos/actualizar/${producto.id}` method="PUT" class="d-flex flex-column" style="width:650px" enctype="application/json")
+            form(method="PUT" action=`/api/productos/actualizar/${producto.id}` class="d-flex flex-column" style="width:650px")
                 label Title 
-                input(type="text" placeholder=`${producto.title}` value=`${producto.title}`)
+                input(type="text" placeholder=`${producto.title}` value=`${producto.title}` id="titleProd")
                 label price
-                input(type="number" placeholder=`${producto.price}` value=`${producto.price}`)
+                input(type="number" placeholder=`${producto.price}` value=`${producto.price}` id="priceProd")
                 label Img
-                input(type="text" placeholder=`${producto.thumbnail}` value=`${producto.thumbnail}`)
-                button(type="submit" class="btn btn-danger mt-2" style="width:100px") Actualizar
+                input(type="text" placeholder=`${producto.thumbnail}` value=`${producto.thumbnail}` id="thumbnailProd")
+                button(type="button" class="btn btn-danger mt-2" style="width:100px" onclick=`updateProd(${producto.id})`) Actualizar
 
