@@ -29,7 +29,9 @@ router.put('/productos/actualizar/:id',(req: express.Request, res: express.Respo
         "price":req.body.price,
         "thumbnail":req.body.thumbnail
     }
-    
+    console.log(req.params)
+    console.log(req.body)
+    console.log(req.query)
     res.json({datos:products.upDateProduct(id_search,prod_to_update)})
 })
 
@@ -80,5 +82,16 @@ router.post("/productos/guardar", (req: express.Request, res: express.Response) 
     
     return res.json({ msg: "Producto guardado" });
 });
+
+
+router.get('/productos/actualizar/:id',(req: express.Request, res: express.Response)=>{
+    
+    let id_search = parseInt(req.params.id)
+    let products = new Archivo("productos.txt");
+
+    res.render('form_actualizar',{producto: products.searchProductId(id_search)})
+})
+
+
 
 module.exports = router
