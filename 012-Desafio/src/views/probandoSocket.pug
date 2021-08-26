@@ -1,0 +1,25 @@
+html 
+    head 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        link(rel="stylesheet" href="/style.css")
+        script(src="/../socket.io/socket.io.js")
+        script(src="/clientesocket.js")
+        script(src="https://cdn.skypack.dev/pug-parser")
+        title Socket
+    body 
+        h2 Aca socket
+        div(class="container ")
+            h1(class="center-align titulo-form") Carga de productos
+            
+            form(action="" method="GET" class="row teal lighten-1 form" style="padding: 10px; display:flex; flex-direction: column;")
+                label(class="grey-text text-darken-3 label-form") Titulo
+                input(class="input-form" type="text" name="title" id="title" placeholder="Title,Ej: Bilardo" required)
+                label(class="grey-text text-darken-3 label-form") Price
+                input(type="number" name="price" id="price" placeholder="Price, Ej: 70" min="0" required)
+                label(class="grey-text text-darken-3 label-form") Url direccion
+                input(type="text" name="img" id="img" placeholder="Direccion de la foto" required)
+                div(style="display: flex; justify-content: center;")
+                    button(class="btn waves-effect waves-light" type="button" name="action" style="width: 150px;" onclick=`send()`) send
+                        <i class="material-icons right">send</i>
+        div(id="productosContainer")

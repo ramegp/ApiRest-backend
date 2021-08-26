@@ -1,0 +1,16 @@
+html 
+    head
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        script(src=`/funcionalidad.js`) 
+        title Actualizar producto por formulario 
+    body 
+        div(class="container-fluid d-flex justify-content-center align-items-center mt-4")
+            form(method="PUT" action=`/api/productos/actualizar/${producto.id}` class="d-flex flex-column" style="width:650px")
+                label Title 
+                input(type="text" placeholder=`${producto.title}` value=`${producto.title}` id="titleProd")
+                label price
+                input(type="number" placeholder=`${producto.price}` value=`${producto.price}` id="priceProd")
+                label Img
+                input(type="text" placeholder=`${producto.thumbnail}` value=`${producto.thumbnail}` id="thumbnailProd")
+                button(type="button" class="btn btn-danger mt-2" style="width:100px" onclick=`updateProd(${producto.id})`) Actualizar
+
