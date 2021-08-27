@@ -1,14 +1,27 @@
 
-import { renderFile } from 'pug-cli';
+
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    const pug = require('pug')
     const div = document.getElementById('productosContainer');
 
     socket.on('productos', data => {
-        console.log(data)
+        //console.log(data)
+        while (div.firstChild) {
+            div.removeChild(div.firstChild);
+        }
+        for (const prod of data) {
+            
+            div.innerHTML += pug.render(
+                `div(class="producto-card")
+    div(class="producto-card-titulo") ${prod.title}
+    div(class="producto-card-info")
+        div ${prod.price}
+        img(class="producto-card-img" src='${prod.thumbnail}', alt="")`)
         
-        console.log(renderFile('cacho.png',data))
+        }
+        //console.log(pug.render('p Hola'))
+        //console.log(pug.compileFile('cacho.png',data))
 
     })
 })

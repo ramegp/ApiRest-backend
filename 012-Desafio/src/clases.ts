@@ -56,9 +56,9 @@ export class ApiBackend {
             socket.on('prod',(data:any)=>{
                 this.prod.push(data)
                 console.log(data)
-                socket.emit('productos',this.prod)
+                this.io.emit('productos',this.prod)
             })
-            
+            this.io.emit('productos',this.prod)
         })
     }
 
