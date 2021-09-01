@@ -23,9 +23,6 @@ const sendMsj = () => {
         date: new Date()
     }
 
-    /* let user_email = document.getElementById("user-email").value
-    let user_txt = document.getElementById("user-txt").value
-    console.log({ user_email, user_txt, date: new Date() }) */
 }
 
 const render = (data,elemDOM) => {

@@ -1,0 +1,12 @@
+[
+	{
+		"user": "ramegp@gmail.com",
+		"msj": "Hola como estan",
+		"date": "2021-09-01T23:17:48.096Z"
+	},
+	{
+		"user": "Ciro@gmail.com",
+		"msj": "Hola todo bien?",
+		"date": "2021-09-01T23:18:43.342Z"
+	}
+]

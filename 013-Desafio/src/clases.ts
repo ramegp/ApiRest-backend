@@ -7,7 +7,7 @@ export class ApiBackend {
     private port: Number;
     private api_route: any = [];
     prod :any=[]
-    msjSalaChat:any=[]
+    private msjSalaChat = new SalaChat("chats.txt")
 
     constructor(port: Number) {
         this.port = port
@@ -36,6 +36,7 @@ export class ApiBackend {
 
         this.metodoSocket()
         //console.log(this.api.stack)
+        
     }
 
     listening = ():Number => {
@@ -60,10 +61,10 @@ export class ApiBackend {
                 this.io.emit('productos',this.prod)
             })
             this.io.emit('productos',this.prod)
-            this.io.emit('allMsj',this.msjSalaChat)
+            this.io.emit('allMsj',this.msjSalaChat.readFile())
             socket.on('salaChat-msj',(data:any)=>{
-                this.msjSalaChat.push(data)
-                this.io.emit('allMsj',this.msjSalaChat)
+                this.msjSalaChat.saveMsj(data)
+                this.io.emit('allMsj',this.msjSalaChat.readFile())
                 console.log(data)
             })
         })
@@ -177,8 +178,46 @@ export class Archivo {
             return 'error, no existe el id'
         }
     }
+}
+interface MsjChat {
+    user: string,
+    msj: string,
+    date: string
+}
+export class SalaChat {
+    private filePath: string;
+    private fs = require('fs');
+    private _path = require('path');
+
+    constructor(path: string = '') {
+        this.filePath = path;
+    }
+
+    readFile =  () => {
+        //devuelve los productos del archivo si es que existe
+        
+        try {
+            let contenido = this.fs.readFileSync(this._path.resolve(__dirname+`/../assets/${this.filePath}`), 'utf-8');
+            return JSON.parse(contenido)
+        } catch (error) {
+            return []
+        }
+        
+    }
+
+
+    saveMsj = (obj: MsjChat) => {
+        //Guarda un producto en un archivo.
+        //let objSave = { ...obj, id: this.obtenerCantidadProductos() + 1 }
+
+        let chats = JSON.parse(this.fs.readFileSync(__dirname + `/../assets/${this.filePath}`, 'utf-8'));
+        chats.push(obj)
+        this.fs.writeFileSync(__dirname + `/../assets/${this.filePath}`, JSON.stringify(chats, null, '\t'))
+        return obj
+    }
 
 }
+
 /* 
 let arch = new Archivo("productos.txt");
 
@@ -194,3 +233,13 @@ console.log(arch.readFile()) */
 }); */
 
 //arch.deleteFile();
+
+/* let arc = new SalaChat("chats.txt")
+let obj = {
+    user:"Ciro",
+    msj:"Hola papilele",
+    date: "2021-09-01T22:54:50.260Z"
+}
+arc.saveMsj(obj)
+console.log(arc.readFile())
+ */
