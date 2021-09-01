@@ -15,7 +15,7 @@ function updateProd(id) {
         "price":parseInt(price),
         "thumbnail":thumbnail
     }
-
+    
     fetch(`http://localhost:8080/api/productos/actualizar/${id}`, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(ob_to_send), // data can be `string` or {object}!

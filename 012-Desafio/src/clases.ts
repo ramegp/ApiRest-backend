@@ -16,7 +16,7 @@ export class ApiBackend {
         this.app.use(this.express.urlencoded({ extended: true }))
 
         this.app.set('views', __dirname + '/views');
-        this.app.set('view engine', 'pug')
+        this.app.set('view engine', 'ejs')
 
         this.app.get('/', (req: any, res: any) => {
             res.sendFile(__dirname + '/public/index.html')

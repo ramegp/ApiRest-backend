@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="/funcionalidad.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <% if (productos.length !=0) { %>
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Img</th>
+                        <th scope="col" style="width:100px"></th>
+                        <th scope="col" style="width:100px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% productos.forEach( p => { %>
+                        <tr>
+                            <th><%= p.id %></th>
+                            <td><%= p.title %></td>
+                            <td><%= p.price %></td>
+                            <td><img src="<%= p.thumbnail %>" style="width: 50px;" alt=""></td>
+                            <td><button type="button" class="btn btn-danger" onclick="deleteProd(<%= p.id %>)">Delete</button></td>
+                            <td><button type="button" class="btn btn-primary" onclick="pageActualizar(<%= p.id %>)">Update</button></td>
+                        </tr>
+                    <%})%>
+                </tbody>
+            </table>
+        <%}else{%>
+            <h1>no hay productos</h1>
+        <%}%>
+    </div>
+</body>
+</html>

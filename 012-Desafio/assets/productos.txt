@@ -52,11 +52,5 @@
 		"price": 45,
 		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-512.png",
 		"id": 9
-	},
-	{
-		"title": "The King",
-		"price": 458,
-		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/King-512.png",
-		"id": 10
 	}
 ]
