@@ -35,7 +35,6 @@ export class ApiBackend {
         }
 
         this.metodoSocket()
-        //console.log(this.api.stack)
         
     }
 
@@ -55,18 +54,22 @@ export class ApiBackend {
             })
             socket.emit('msj-server','servidor')
 
-            socket.on('prod',(data:any)=>{
-                this.prod.push(data)
-                console.log(data)
-                this.io.emit('productos',this.prod)
-            })
+            this.confCargaProductosEnVivo(socket)
+            this.confSalaChat(socket)
+        })
+    }
+    private confCargaProductosEnVivo = (socket : any) => {
+        socket.on('prod',(data:any)=>{
+            this.prod.push(data)
             this.io.emit('productos',this.prod)
-            this.io.emit('allMsj',this.msjSalaChat.readFile())
+        })
+        this.io.emit('productos',this.prod)
+    }
+    private confSalaChat = (socket:any) =>{
+        this.io.emit('allMsj',this.msjSalaChat.readFile())
             socket.on('salaChat-msj',(data:any)=>{
                 this.msjSalaChat.saveMsj(data)
                 this.io.emit('allMsj',this.msjSalaChat.readFile())
-                console.log(data)
-            })
         })
     }
 
