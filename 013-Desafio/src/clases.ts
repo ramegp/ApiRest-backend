@@ -4,12 +4,12 @@ export class ApiBackend {
     private server= require("http").Server(this.app);
     private io = require('socket.io')(this.server)
     private api: any;
-    private port: Number;
+    private port: number;
     private api_route: any = [];
     prod :any=[]
     private msjSalaChat = new SalaChat("chats.txt")
 
-    constructor(port: Number) {
+    constructor(port: number) {
         this.port = port
         this.api = require('./rutas/productos.route');
         this.app.use(this.express.json())
@@ -38,7 +38,7 @@ export class ApiBackend {
         
     }
 
-    listening = ():Number => {
+    listening = ():number => {
         return this.port
     }
 
