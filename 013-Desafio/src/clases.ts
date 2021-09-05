@@ -77,7 +77,7 @@ export class ApiBackend {
 }
 interface Producto {
     title: string,
-    price: Number,
+    price: number,
     thumbnail: string
 }
 
