@@ -496,20 +496,10 @@ export class DBMysql {
 
     constructor() { }
 
-    addProduct = (prod: Producto) => {
+    addProduct = (prod: Producto):Promise<any>=> {
         //agrega un producto solo
-        this.knex('products').insert(prod)
-            .then(() => {
-                console.log('Se cargo el producto');
-
-            })
-            .catch((err: any) => {
-                console.log(err);
-
-            })
-            .finally(() => {
-                this.knex.destroy()
-            })
+        return this.knex('products').insert(prod)
+        
     }
 
     addProducts = (array: Array<Producto>) => {
@@ -529,56 +519,33 @@ export class DBMysql {
     }
 
     deleteProd = (drop_id: number) => {
-        this.knex('products')
+        return this.knex('products')
             .where({ id: drop_id })
             .del()
-            .then(() => {
-                console.log('Se borro');
-
-            })
-            .catch((err: any) => {
-                console.log(err);
-
-            })
-            .finally(() => {
-                this.knex.destroy()
-            })
-    }
-
-    showAllProducts = () => {
-        let array:Array<Producto> = []
-        this.knex('products').select('*')
-            .then((data: any) => {
-                for (const i of data) {
-                    array.push(i)
-                    
-                }
-                
-            })
-            .catch((err: any) => {
-                console.log(err);
-
-            })
-            .finally(():Array<Producto> => {
-                this.knex.destroy()
-                return array
-            })
             
     }
 
+    showAllProducts = () => {
+        
+        return this.knex('products').select('*')
+            
+        
+    }
+
+    showOnlyProduct = (id_search:number)=>{
+        return this.knex('products')
+        .where({ id: id_search })
+    }
+
     updateProduc = (id_update: number,prod_new:Producto) => {
-        this.knex('products')
+        return this.knex('products')
             .where({ id: id_update })
             .update(prod_new)
-            .then(() => {
-                console.log('Se actualizo');
-            })
-            .catch((err: any) => {
-                console.log(err);
-            })
-            .finally(() => {
-                this.knex.destroy()
-            })
+            
+    }
+
+    cerrarBD = ()=>{
+        this.knex.destroy()
     }
 
 }
@@ -628,21 +595,23 @@ CART.addProductToCart("ramegp",produ)
 console.log(CART.getCarts());
  */
 
-let db = new DBMysql();
-
+//let db = new DBMysql();
+/* 
 let obj = {
-    "title": "Maradona",
-    "description": "Jugador seleccion argentina",
+    "title": "Neymar",
+    "description": "Jugador de basquet",
     "stock": 1,
     "timestamp": "2021-09-01T23:18:43.342Z",
     "codigo": "JU-10",
-    "price": 100.25,
+    "price": 1000.25,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-512.png"
 }
+ */
+//db.addProduct(obj).then((data)=>{console.log(data)})
+//db.deleteProd(12).then((data:any)=>{console.log(data)});
 
-//db.addProduct(obj);
-//db.deleteProd(12);
-console.log(db.showAllProducts());
+//db.showAllProducts().then((a:any)=>console.log(a))
 
-
-//db.updateProduc(11,obj)
+//db.cerrarBD()
+/* db.updateProduc(13,obj).then((data:any)=>{if(data==1)console.log("actualizo");else console.log('no');
+}) */
