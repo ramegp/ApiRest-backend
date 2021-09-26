@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="/funcionalidad.js"></script>
+    <title>ejs</title>
+</head>
+<body>
+    <h1><%= producto.title %></h1>
+    <div class="container-fluid d-flex justify-content-center align-items-center mt-4">
+
+        <form action= "/api/productos/actualizar/<%= producto.id %>" method="post" class="d-flex flex-column" style="width:650px">
+            <label for="">Title</label>
+            <input type="text" placeholder="<%= producto.title %>" value="<%= producto.title %>" name="" id="titleProd">
+            <label for="">Price</label>
+            <input type="number" placeholder="<%= producto.price %>" value="<%= producto.price %>" name="" id="priceProd">
+            <label for="">Url Imagen</label>
+            <input type="text" placeholder="<%= producto.thumbnail %>" value="<%= producto.thumbnail %>" name="" id="thumbnailProd">
+            <button type="button" class="btn btn-danger mt-2" style="width:100px" onclick=updateProd("<%= producto.id %>")>Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

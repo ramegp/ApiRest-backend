@@ -1,0 +1,75 @@
+use ecommerce;
+db.createCollection('mensajes');
+db.createCollection('productos');
+
+db.productos.insert({title:'Salamin',description:'Embutido casero',stock:10,timestamp:'2021-09-09T22:26:41.443Z',codigo:'EM-01',price:150,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Queso mar del plata',description:'Queso cascara roja',stock:25,timestamp:'2021-09-09T22:26:41.443Z',codigo:'Q-01',price:1500,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Ibuprofeno',description:'Ibuprofeno 500mg',stock:149,timestamp:'2021-09-09T22:26:41.443Z',codigo:'Q-01',price:500,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Yerba Rosa Monte',description:'Yerba secado natural',stock:500,timestamp:'2021-09-09T22:26:41.443Z',codigo:'Q-01',price:50,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Jamon',description:'Calchaqui',stock:250,timestamp:'2021-09-09T22:26:41.443Z',codigo:'Q-01',price:3500,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Silla Eames',description:'Silla estilo moderno',stock:12,timestamp:'2021-09-09T22:26:41.443Z',codigo:'Q-01',price:4560,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Samsung s8',description:'Celular con camara',stock:1,timestamp:'2021-09-09T22:26:41.443Z',codigo:'CE-01',price:5000,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Cuchillo',description:'Cuchillo de acero',stock:100,timestamp:'2021-09-09T22:26:41.443Z',codigo:'CU-01',price:5,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Porton corredizo',description:'Porton de 3m alto por 2 ancho',stock:100,timestamp:'2021-09-09T22:26:41.443Z',codigo:'CU-01',price:4800,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Pañal',description:'Tamaño XXL',stock:1000,timestamp:'2021-09-09T22:26:41.443Z',codigo:'CU-01',price:1080,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.insert({title:'Birome',description:'Color azul',stock:10,timestamp:'2021-09-09T22:26:41.443Z',codigo:'CU-01',price:10,thumbnail:'https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png'});
+
+db.productos.find().pretty()
+
+db.mensajes.insert({user:'ramegp@gmail.com',msj:'Hola, como andan?',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'ciro@gmail.com',msj:'Hay alguien ahi??',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'julia@gmail.com',msj:'jajajajaja',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'ramegp@gmail.com',msj:'jijiasd',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'palito@gmail.com',msj:'zapato roto',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'estudiantes@gmail.com',msj:'te comiste 7',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'vamoñubel@gmail.com',msj:'messiiiiiiii',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'iudica@gmail.com',msj:'Daleeeee!!',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'95@gmail.com',msj:'Muy buena la radio',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.insert({user:'comandante@gmail.com',msj:'Mamaaaaaaaaaaaaaa',date:'2021-09-02T22:56:44.421Z'});
+
+db.mensajes.find().pretty()
+
+db.productos.count()
+db.mensajes.count()
+
+db.productos.find({price:{$lt:1000}})
+db.productos.find({$and:[{price:{$gte:1000}},{price:{$lte:3000}}]}).pretty()
+db.productos.find({price:{$gt:3000}}).pretty()
+db.productos.find({},{title:1}).sort({price:1}).skip(3).limit(1).pretty()
+db.productos.update({},{$inc:{stock:10}},{multi:true})
+
+db.productos.update({price:{$gt:4000}},{$set:{stock:0}},{multi:true})
+
+db.productos.remove({price:{$lt:1000}})
+
+
+db.createUser(
+{
+user:"pepe",
+pwd:"asd456",
+roles:[
+{role:"read",db"ecommerce"}
+]
+}
+)
+
+
