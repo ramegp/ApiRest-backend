@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/../socket.io/socket.io.js"></script>
+    <script src="/clientesocket.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <title>Document</title>
+</head>
+<body class="grey lighten-2">
+
+    
+
+
+    <div class="container">
+        <h1 class="center-align titulo-form">Carga de producto</h1>
+        <form action= "" method="get" class="row teal lighten-1 form" style="padding: 10px; display:flex; flex-direction: column;">
+            <label for="" class="grey-text text-darken-3 label-form">Title</label>
+            <input type="text" placeholder="EJ: Salamin.." value="" name="" id="titleProd" required>
+            <label for="" class="grey-text text-darken-3 label-form">Price</label>
+            <input type="number" placeholder="Ej: 45" value="" name="" id="priceProd" required>
+            <label for="" class="grey-text text-darken-3 label-form">Url Imagen</label>
+            <input type="text"  placeholder="Direccion de la foto" value="" name="" id="thumbnailProd" required>
+            <div style="display: flex; justify-content: center;">
+                <button class="btn waves-effect waves-light" onclick="send()" type="button" name="action" style="width: 150px;">Enviar
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container vista-products" id="my_render"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ejs@3.1.6/ejs.min.js"></script>
+</body>
+</html>

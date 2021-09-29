@@ -1,4 +1,5 @@
 
+import { SIGQUIT } from "constants";
 import { ObjectId } from "mongoose";
 import { Socket } from "socket.io";
 
@@ -40,6 +41,9 @@ export class ApiBackend {
     private route_admin: any;
     //Route Error
     private route_error: any;
+    //Route products sqlite3
+    private route_products_sqlite: any;
+
 
     private port: number;
     private api_route: any = [];
@@ -48,18 +52,21 @@ export class ApiBackend {
 
 
     //Para manejar la base de datos
-    //private options_sqlite3 = require('./options/sqlite3');
-    //private knex_sqlite3 = require('knex')(this.options_sqlite3);
+    private options_sqlite3 = require('./options/sqlite3');
+    private knex_sqlite3 = require('knex')(this.options_sqlite3);
 
     //private options_mysql = require('./options/mysql');
     //private knex_mysql = require('knex')(this.options_mysql);
 
 
 
-    constructor(port: number) {
-        //console.log(this.config.application.cors.server);
+    constructor(port: number,tipo_bd : number = 1) {
+        /* 
+            Si tipo_bd => 1 cargamos MongoDB por default
+            Si tipp_bd => 0 cargamos Mysql
+        */
+        
         this.port = port
-        //this.api = require('./routes/productos.route');
         //Route del carrito de compras
         this.cart = require('./routes/carrito.route');
         //Route Productos
@@ -71,6 +78,7 @@ export class ApiBackend {
         //Route Error 
         this.route_error = require('./routes/error.route');
 
+        this.route_products_sqlite = require('./routes/productsSqlite3.routes')
 
         this.app.use(this.express.json())
         this.app.use(this.express.text())
@@ -82,11 +90,20 @@ export class ApiBackend {
 
         this.app.use(this.cors());
 
-        //Cargo las Routes
-        this.app.use('/cart', this.cart);
-        this.app.use('/products', this.route_products);
-        this.app.use('/messages',this.route_messages);
-        this.app.use('/admin', this.route_admin);
+        switch (tipo_bd) {
+            case 1:
+                //Cargo las Routes Mongo
+                this.app.use('/cart', this.cart);
+                this.app.use('/products', this.route_products);
+                this.app.use('/messages',this.route_messages);
+                this.app.use('/admin', this.route_admin);
+                break;
+            case 2:
+                this.app.use('/products',this.route_products_sqlite);
+                this.DBSqlite3()
+            default:
+                break;
+        }
         this.app.use('/', this.route_error)
 
 
@@ -174,6 +191,30 @@ export class ApiBackend {
         }) */
     }
 
+    private DBSqlite3 = () => {
+        let products = new Archivo('productos.txt');
+
+        this.knex_sqlite3.schema.dropTableIfExists("products").createTable('products', (table: any) => {
+            table.increments('id');
+            table.string('title', 20);
+            table.float('price');
+            table.string('description');
+            table.integer('stock');
+            table.string('timestamp');
+            table.string('codigo', 15);
+            table.string('thumbnail');
+
+        }).then(() => {
+            console.log('table creada');
+            this.knex_sqlite3("products").insert(products.readFile())
+            .then(() => {
+                console.log('Se han cargado los productos');
+
+            })
+        })
+            .catch((err: any) => console.log(err))/* 
+        .finally(()=>{this.knex_sqlite3.destroy()}) */
+    }
     
 
     
@@ -457,9 +498,9 @@ export class HandleCarts {
     }
 
 }
-/* 
-export class DBMysql {
-    private options = require('./options/mysql');
+
+export class DBSqlite3 {
+    private options = require('./options/sqlite3');
     private knex = require('knex')(this.options);
 
     constructor() { }
@@ -500,9 +541,40 @@ export class DBMysql {
         
     }
 
-    showOnlyProduct = (id_search:number)=>{
+    findById = (id_search:number)=>{
         return this.knex('products')
         .where({ id: id_search })
+    }
+
+    findByName = (name:string)=>{
+        return this.knex('products').where({title:name})
+    }
+
+    findByCode = (code:string)=>{
+        return this.knex('products').where({codigo:code})
+    }
+
+    findByStockRange = (stock_min:number,stock_max:number) => {
+        if (stock_min <= stock_max) {
+            return this.knex('products').where('stock','>=',stock_min).where('stock','<',stock_max)
+        } else {
+            return {}
+        }
+    }
+    findByPriceRange = (price_min:number,price_max:number) => {
+        if (price_min <= price_max) {
+            return this.knex('products').where('price','>=',price_min).where('price','<',price_max)
+        } else {
+            return {}
+        }
+    }
+
+    findByPriceStockRange = (price_min:number,price_max:number,stock_min:number,stock_max:number) => {
+        if ((price_min <= price_max)&&(stock_min <= stock_max)) {
+            return this.knex('products').where('price','>=',price_min).where('price','<',price_max).where('stock','>=',stock_min).where('stock','<',stock_max)
+        } else {
+            return {}
+        }
     }
 
     updateProduc = (id_update: number,prod_new:Producto) => {
@@ -516,9 +588,7 @@ export class DBMysql {
         this.knex.destroy()
     }
 
-} */
-
-import { connect as pconnect, disconnect as pdisconnect } from "./database/db-products";
+}
 
 
 export class DBMongo {
@@ -552,7 +622,58 @@ export class DBMongo {
     findByName = async (name:string) => {
         let db = this.prod_connect();
         let producto = await db?.UserModel.find({title:name});
+        this.prod_disconnect()
         return producto
+    }
+
+    findByCode = async (code:string) => {
+        let db = this.prod_connect();
+        let producto = await db?.UserModel.find({codigo:code});
+        this.prod_disconnect()
+        return producto
+    }
+
+    findByPrice = async ( price_max:number, price_min:number = 0) => {
+        //Pasamos primero el precio mayor 
+        
+        if (price_min <= price_max) {
+
+            let db = this.prod_connect();
+            let producto = await db?.UserModel.find({price:{$gte:price_min,$lt:price_max}});
+            this.prod_disconnect()
+            return producto
+            
+        } else {
+            return {}
+        }
+    }
+
+    findByStock = async ( stock_max:number, stock_min:number) => {
+        //Pasamos primero el precio mayor 
+        
+        if (stock_min <= stock_max) {
+
+            let db = this.prod_connect();
+            let producto = await db?.UserModel.find({stock:{$gte:stock_min,$lt:stock_max}});
+            this.prod_disconnect()
+            return producto
+            
+        } else {
+            return {}
+        }
+    }
+
+    findByPriceStock = async (price_max:number,price_min:number,stock_max:number,stock_min:number) => {
+        if ((stock_min <= stock_max) && (price_min<=price_max)) {
+
+            let db = this.prod_connect();
+            let producto = await db?.UserModel.find({$and:[{price:{$gte:price_min,$lt:price_max}},{stock:{$gte:stock_min,$lt:stock_max}}]});
+            this.prod_disconnect()
+            return producto
+            
+        } else {
+            return {}
+        }
     }
 
     addProd = async (new_prod:any) => {
@@ -611,14 +732,14 @@ export class DBMongo {
     }
 }
 
-let db = new DBMongo()
+//let db = new DBMongo()
 
 /* db.findById('6144fc851bd5a6f997fde914').then((data:any)=>{console.log(data);
 }) */
 
 /* db.findByName("Jamon").then((d:any)=>{console.log(d);
 }) */
-let p = {
+/* let p = {
     "title": "Salamin",
     "description": "Escuadra de color rosa",
     "stock": 400,
@@ -626,7 +747,7 @@ let p = {
     "codigo": "ES-55",
     "price": 123.45,
     "thumbnail": "https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png"
-}
+} */
 /* db.addProd(p).then((d:any)=>{console.log(d);
 }) */
 
@@ -703,3 +824,8 @@ let obj = {
 //db.cerrarBD()
 /* db.updateProduc(13,obj).then((data:any)=>{if(data==1)console.log("actualizo");else console.log('no');
 }) */
+
+
+//let db = new DBSqlite3();
+
+//db.findByPriceStockRange(0,30,0,500).then((data:any)=>{console.log(data)})
