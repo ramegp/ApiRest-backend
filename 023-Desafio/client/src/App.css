@@ -1,0 +1,42 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+body{
+  background: rgb(155,213,143);
+background: linear-gradient(90deg, rgba(155,213,143,1) 0%, rgba(55,182,185,1) 50%, rgba(155,213,143,1) 100%);
+}
+.titulo{
+  display: flex;
+  justify-content: center;
+}
+.titulo h3{
+  font-size: 32px;
+  font-weight: bolder;
+  
+}
+.containerChat{
+  
+}
+.containerRow{
+  height: 90vh;
+}
+.Chat-usuarios{
+  background-color: rgb(185, 185, 183);
+  box-shadow: inset 0px 0px 10px black;
+}
+.Chat-mensajes{
+  background-image: url('/src/img/39236878-productos-cosméticos-fondo.jpg');
+  background-position: center;
+  box-shadow: inset 0px 0px 10px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mensajes-all{
+  height: 800px;
+  overflow: hidden;
+  overflow-y: scroll;
+}

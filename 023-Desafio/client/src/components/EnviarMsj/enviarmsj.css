@@ -1,0 +1,25 @@
+.containerEnviar{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.containerEnviar-inp{
+    width: 90%;
+    margin-right: 5px;
+    background-color: rgba(133, 150, 150, 0.671);
+    text-decoration: none;
+    border: none;
+    border-radius: 7px;
+
+}
+
+.containerEnviar-inp:active{
+    border: none;
+}
+.containerEnviar-inp:focus{
+    border: none;
+    outline: none;
+}

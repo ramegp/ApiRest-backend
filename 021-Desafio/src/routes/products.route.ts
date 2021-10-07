@@ -5,12 +5,12 @@ import { Archivo, DBMongo } from '../clases'
 
 const router = express.Router();
 
-router.get('/listar/:id?', (req: express.Request, res: express.Response) => {
+router.get('/listar/:id?', async (req: express.Request, res: express.Response) => {
     let id_show = req.params.id
     let {nombre, preciomax, preciomin, codigo, stockmax, stockmin} = req.query
-
+    
     let db = new DBMongo();
-    db.findByPrice(0,1)
+    
     if (id_show) {
         db.findById(id_show).then((data:any)=>{res.json(data)})
     } else {

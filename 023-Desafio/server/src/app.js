@@ -86,7 +86,7 @@ const empresaSchema = new schema.Entity('empresa',{
    
    gerente:empleadoSchema,
    encargado:empleadoSchema,
-   empleados:empleadoSchema
+   empleados:[empleadoSchema]
 
 })
 

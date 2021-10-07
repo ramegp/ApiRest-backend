@@ -102,8 +102,6 @@ const msj = new schema.Entity('mensaje',{
 const msjs = new schema.Entity('mensajes',{
     mensajes:[msj]
 })
-const all = new schema.Entity('enviados',{
-  msj_enviados:msj
-})
+
 const normalizeData = normalize(mensajes,msjs)
 console.log(JSON.stringify(normalizeData))

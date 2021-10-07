@@ -730,6 +730,24 @@ export class DBMongo {
         this.msg_disconnect()
         return msg_saved
     }
+    manejador = (search:string,amount:number|string) => {
+        switch (search) {
+            case 'preciomax':
+                //@ts-ignore
+                return this.findByPrice(amount,0)
+                break;
+            case 'stockmax':
+                //@ts-ignore
+                return this.findByStock(amount,0)
+                break;
+            case 'nombre':
+                //@ts-ignore
+                return this.findByName(amount)
+                break
+            default:
+                break;
+        }
+    }
 }
 
 //let db = new DBMongo()
