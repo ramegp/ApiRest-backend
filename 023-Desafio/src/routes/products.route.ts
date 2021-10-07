@@ -8,7 +8,7 @@ faker.locate = 'es'
 
 const router = express.Router();
 
-router.get('/listar/:id?', async (req: express.Request, res: express.Response) => {
+router.get('/:id?', async (req: express.Request, res: express.Response) => {
     let id_show = req.params.id
     let {nombre, preciomax, preciomin, codigo, stockmax, stockmin} = req.query
     let db = new DBMongo();
@@ -49,14 +49,14 @@ router.get('/listar/:id?', async (req: express.Request, res: express.Response) =
     
 })
 
-router.post('/agregar', (req: express.Request, res: express.Response) => {
+router.post('/', (req: express.Request, res: express.Response) => {
     let obj = req.body
 
     let db = new DBMongo();
     db.addProd(obj).then((prod) => {res.json(prod)})
 })
 
-router.delete('/borrar/:id', (req: express.Request, res: express.Response) => {
+router.delete('/:id', (req: express.Request, res: express.Response) => {
     let id_delete = req.params.id
 
     let db = new DBMongo();
@@ -65,7 +65,7 @@ router.delete('/borrar/:id', (req: express.Request, res: express.Response) => {
     })
 })
 
-router.put('/actualizar/:id', (req: express.Request, res: express.Response) => {
+router.put('/:id', (req: express.Request, res: express.Response) => {
     let id_produc = req.params.id
     let db = new DBMongo();
 

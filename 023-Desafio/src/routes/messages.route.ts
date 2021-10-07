@@ -5,7 +5,7 @@ import { Archivo, DBMongo } from '../clases'
 
 const router = express.Router();
 
-router.get('/listar/:id?', (req: express.Request, res: express.Response) => {
+router.get('/:id?', (req: express.Request, res: express.Response) => {
     let id_show = req.params.id
     //console.log(id_show);
     
@@ -14,7 +14,7 @@ router.get('/listar/:id?', (req: express.Request, res: express.Response) => {
     (id_show)?(db.showMessagesById(id_show).then((data:any)=>{res.json(data)})):(db.showMessages().then((data:any)=>{res.json(data)}))
 })
 
-router.post('/agregar', (req: express.Request, res: express.Response) => {
+router.post('/', (req: express.Request, res: express.Response) => {
     let msg_to_add = req.body
 
     let db = new DBMongo();
@@ -22,7 +22,7 @@ router.post('/agregar', (req: express.Request, res: express.Response) => {
     
 })
 
-router.delete('/borrar/:id', (req: express.Request, res: express.Response) => {
+router.delete('/:id', (req: express.Request, res: express.Response) => {
     let id_delete = req.params.id
 
     let db = new DBMongo();
@@ -31,7 +31,7 @@ router.delete('/borrar/:id', (req: express.Request, res: express.Response) => {
     })
 })
 
-router.put('/actualizar/:id', (req: express.Request, res: express.Response) => {
+router.put('/:id', (req: express.Request, res: express.Response) => {
     let id_msg = req.params.id
     let db = new DBMongo();
 
