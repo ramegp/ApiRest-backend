@@ -10,7 +10,7 @@ router.get('/',(req: express.Request, res: express.Response)=>{
     
     console.log(`${req.session.user} `);
     //@ts-ignore
-    req.session.cookie.expires = new Date(Date.now() + 10000);
+    //req.session.cookie.expires = 15000;
     //@ts-ignore
     req.session.cookie.maxAge = 10000;
     (req.session.user)?(res.json({user:req.session.user,admin:req.session.admin})):(res.json({user:null,admin:false}))
@@ -24,6 +24,8 @@ router.post('/',(req: express.Request, res: express.Response)=>{
         res.json({status:"error",body:"completar usuario y password"})
     } else {
 
+        //@ts-ignore
+        req.session.cookie.maxAge = 10000;
         
         req.session.user = user;
         

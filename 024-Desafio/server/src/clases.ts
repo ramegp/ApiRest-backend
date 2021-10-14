@@ -112,11 +112,11 @@ export class ApiBackend {
                 mongoOptions: this.advancedOptions
             }),
             secret: "secreto",
-            resave: false,
+            resave: true,
             saveUninitialized: true,
             cookie: {
                 secure: false,
-                maxAge: 10000
+               /*  maxAge: 10000 */
             }
         }))
 
