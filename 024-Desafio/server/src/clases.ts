@@ -32,20 +32,23 @@ export class ApiBackend {
     }
 
     private session = require("express-session");
+    private MongoStore = require('connect-mongo');
+    private advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+
 
     //Route carrito
     private cart: any;
     //Route productos
     private route_products: any;
     //Route message
-    private route_messages:any
+    private route_messages: any
     //Route Admin
     private route_admin: any;
     //Route Error
     private route_error: any;
 
     //Route Log
-    private route_log:any; 
+    private route_log: any;
 
     /* 
     //Route products sqlite3
@@ -58,10 +61,10 @@ export class ApiBackend {
     private msjSalaChat = new SalaChat("chats.txt");
 
 
-   /*  //Para manejar la base de datos
-    private options_sqlite3 = require('./options/sqlite3');
-    private knex_sqlite3 = require('knex')(this.options_sqlite3);
- */
+    /*  //Para manejar la base de datos
+     private options_sqlite3 = require('./options/sqlite3');
+     private knex_sqlite3 = require('knex')(this.options_sqlite3);
+  */
 
     /*  //Para manejar la base de datos
      private options_sqlite3 = require('./options/sqlite3');
@@ -93,33 +96,46 @@ export class ApiBackend {
         //Route Error 
         this.route_error = require('./routes/error.route');
         //Route Log
-        this.route_log= require('./routes/log.route');
+        this.route_log = require('./routes/log.route');
 
         //this.route_products_sqlite = require('./routes/productsSqlite3.routes')
+
+        this.app.use(this.cors({
+            credentials: true,
+            origin: true,
+        }));
+
+        //configuracion session
+        this.app.use(this.session({
+            store: this.MongoStore.create({
+                mongoUrl: 'mongodb+srv://dbUser:asd123456@ecommerce.iqobf.mongodb.net/sessions?retryWrites=true&w=majority',
+                mongoOptions: this.advancedOptions
+            }),
+            secret: "secreto",
+            resave: false,
+            saveUninitialized: true,
+            cookie: {
+                secure: false,
+                maxAge: 10000
+            }
+        }))
 
         this.app.use(this.express.json())
         this.app.use(this.express.text())
         this.app.use(this.express.urlencoded({ extended: true }))
-        
-        //configuracion session
-        this.app.use(this.session({
-            secret:"secreto",
-            resave:true,
-            saveUninitialized:true
-        }))
+
 
         this.app.set('views', __dirname + '/views');
         this.app.set('view engine', 'ejs')
 
 
-        this.app.use(this.cors());
 
 
         //Cargo las Routes Mongo
-        this.app.use('/log',this.route_log)
+        this.app.use('/log', this.route_log)
         this.app.use('/cart', this.cart);
         this.app.use('/products', this.route_products);
-        this.app.use('/messages',this.route_messages);
+        this.app.use('/messages', this.route_messages);
         this.app.use('/admin', this.route_admin);
         this.app.use('/', this.route_error)
 
@@ -164,11 +180,11 @@ export class ApiBackend {
     private metodoSocket = () => {
         this.io.on('connection', (socket: any) => {
             //console.log(`usuario conectado: ${socket.id}`);
-            
+
             socket.emit('msj-server', 'servidor')
 
             this.configConexionReact(socket)
-            
+
         })
     }
     private confCargaProductosEnVivo = (socket: any) => {
@@ -188,26 +204,26 @@ export class ApiBackend {
 
     private configConexionReact = (socket: any) => {
         //conexion con el front
-        socket.on('msj-user',(data:any)=>{
+        socket.on('msj-user', (data: any) => {
             this.msjSalaFront.push(data);
-            this.io.emit('mensajes',this.msjSalaFront)
+            this.io.emit('mensajes', this.msjSalaFront)
         })
-        socket.on('usuario-conectado',(data:any)=>{
+        socket.on('usuario-conectado', (data: any) => {
             let obj = {
-                id:socket.id,
-                user:data
+                id: socket.id,
+                user: data
             }
             this.userConected.push(obj)
-            this.io.emit('usuarios-conectados',this.userConected)
+            this.io.emit('usuarios-conectados', this.userConected)
             console.log(`Conectados ${this.userConected.length}`)
         })
-        this.io.emit('usuarios-conectados',this.userConected);
-        this.io.emit('mensajes',this.msjSalaFront);
+        this.io.emit('usuarios-conectados', this.userConected);
+        this.io.emit('mensajes', this.msjSalaFront);
     }
 
-   
 
-    
+
+
 
 }
 interface Producto {
@@ -591,10 +607,10 @@ export class DBMongo {
     msg_disconnect = require('./database/db-messages').disconnect;
 
 
-    constructor (){
-        
+    constructor() {
+
     }
-    
+
     imprimir = async () => {
 
         let db = this.prod_connect()
@@ -602,89 +618,89 @@ export class DBMongo {
         //console.log(productos);
         this.prod_disconnect();
         return productos
-        
+
     }
 
-    findById = async (id:string) => {
+    findById = async (id: string) => {
         let db = this.prod_connect();
-        let producto = await db?.UserModel.find({_id:id})
+        let producto = await db?.UserModel.find({ _id: id })
         this.prod_disconnect();
-        
+
         return producto
     }
-    findByName = async (name:string) => {
+    findByName = async (name: string) => {
         let db = this.prod_connect();
-        let producto = await db?.UserModel.find({title:name});
+        let producto = await db?.UserModel.find({ title: name });
         this.prod_disconnect()
         return producto
     }
 
-    findByCode = async (code:string) => {
+    findByCode = async (code: string) => {
         let db = this.prod_connect();
-        let producto = await db?.UserModel.find({codigo:code});
+        let producto = await db?.UserModel.find({ codigo: code });
         this.prod_disconnect()
         return producto
     }
 
-    findByPrice = async ( price_max:number, price_min:number = 0) => {
+    findByPrice = async (price_max: number, price_min: number = 0) => {
         //Pasamos primero el precio mayor 
-        
+
         if (price_min <= price_max) {
 
             let db = this.prod_connect();
-            let producto = await db?.UserModel.find({price:{$gte:price_min,$lt:price_max}});
+            let producto = await db?.UserModel.find({ price: { $gte: price_min, $lt: price_max } });
             this.prod_disconnect()
             return producto
-            
+
         } else {
             return {}
         }
     }
 
-    findByStock = async ( stock_max:number, stock_min:number) => {
+    findByStock = async (stock_max: number, stock_min: number) => {
         //Pasamos primero el precio mayor 
-        
+
         if (stock_min <= stock_max) {
 
             let db = this.prod_connect();
-            let producto = await db?.UserModel.find({stock:{$gte:stock_min,$lt:stock_max}});
+            let producto = await db?.UserModel.find({ stock: { $gte: stock_min, $lt: stock_max } });
             this.prod_disconnect()
             return producto
-            
+
         } else {
             return {}
         }
     }
 
-    findByPriceStock = async (price_max:number,price_min:number,stock_max:number,stock_min:number) => {
-        if ((stock_min <= stock_max) && (price_min<=price_max)) {
+    findByPriceStock = async (price_max: number, price_min: number, stock_max: number, stock_min: number) => {
+        if ((stock_min <= stock_max) && (price_min <= price_max)) {
 
             let db = this.prod_connect();
-            let producto = await db?.UserModel.find({$and:[{price:{$gte:price_min,$lt:price_max}},{stock:{$gte:stock_min,$lt:stock_max}}]});
+            let producto = await db?.UserModel.find({ $and: [{ price: { $gte: price_min, $lt: price_max } }, { stock: { $gte: stock_min, $lt: stock_max } }] });
             this.prod_disconnect()
             return producto
-            
+
         } else {
             return {}
         }
     }
 
-    addProd = async (new_prod:any) => {
+    addProd = async (new_prod: any) => {
         let db = this.prod_connect();
         let prod = await db?.UserModel.create(new_prod)
         this.prod_disconnect()
         return prod
     }
 
-    removeById = async (id:string) => {
+    removeById = async (id: string) => {
         let db = this.prod_connect();
-        let prod_removed = await db?.UserModel.deleteOne({_id:id})
+        let prod_removed = await db?.UserModel.deleteOne({ _id: id })
         this.prod_disconnect();
         return prod_removed
     }
-    upDate = async (id:string,prod:any) => {
+    upDate = async (id: string, prod: any) => {
         let db = this.prod_connect();
-        let prod_saved = await db?.UserModel.updateOne({'_id':id},prod);
+        let prod_saved = await db?.UserModel.updateOne({ '_id': id }, prod);
         this.prod_disconnect()
         return prod_saved
     }
@@ -696,42 +712,42 @@ export class DBMongo {
         this.msg_disconnect();
         return messages
     }
-    showMessagesById = async (id:string) => {
+    showMessagesById = async (id: string) => {
         let db = this.msg_connect();
-        let message = await db?.MessagesModel.find({_id:id})
+        let message = await db?.MessagesModel.find({ _id: id })
         this.msg_disconnect();
-        
+
         return message
     }
-    addMessage = async (msg:MsjChat) => {
+    addMessage = async (msg: MsjChat) => {
         let db = this.msg_connect();
         let message_created = await db?.MessagesModel.create(msg)
         this.msg_disconnect()
         return message_created
     }
 
-    removeMessageById = async (id_to_deleted:string) => {
+    removeMessageById = async (id_to_deleted: string) => {
         let db = this.msg_connect();
-        let msg_removed = await db?.MessagesModel.deleteOne({_id:id_to_deleted})
+        let msg_removed = await db?.MessagesModel.deleteOne({ _id: id_to_deleted })
         this.msg_disconnect();
         return msg_removed
     }
 
-    upDateMessageById = async (id_to_update:string,msg_upgrade:MsjChat) => {
+    upDateMessageById = async (id_to_update: string, msg_upgrade: MsjChat) => {
         let db = this.msg_connect();
-        let msg_saved = await db?.MessagesModel.updateOne({'_id':id_to_update},msg_upgrade);
+        let msg_saved = await db?.MessagesModel.updateOne({ '_id': id_to_update }, msg_upgrade);
         this.msg_disconnect()
         return msg_saved
     }
-    manejador = (search:string,amount:number|string) => {
+    manejador = (search: string, amount: number | string) => {
         switch (search) {
             case 'preciomax':
                 //@ts-ignore
-                return this.findByPrice(amount,0)
+                return this.findByPrice(amount, 0)
                 break;
             case 'stockmax':
                 //@ts-ignore
-                return this.findByStock(amount,0)
+                return this.findByStock(amount, 0)
                 break;
             case 'nombre':
                 //@ts-ignore
@@ -816,7 +832,7 @@ console.log(CART.getCarts());
  */
 
 //let db = new DBMysql();
-/* 
+/*
 let obj = {
     "title": "Neymar",
     "description": "Jugador de basquet",

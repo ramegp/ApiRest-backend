@@ -1,4 +1,3 @@
-import { resolveSoa } from "dns";
 import express = require("express");
 let __path = require('path');
 
@@ -7,30 +6,41 @@ const router = express.Router();
 import { auth } from '../middleware/log'
 
 router.get('/',(req: express.Request, res: express.Response)=>{
+    /* cuando consulto a esta ruta no me devuelve el la session y el usuario */
+    
+    console.log(`${req.session.user} `);
     //@ts-ignore
-    (req.session)?(res.json({user:req.session.user,admin:req.session.admin})):(res.json({}))
+    req.session.cookie.expires = new Date(Date.now() + 10000);
+    //@ts-ignore
+    req.session.cookie.maxAge = 10000;
+    (req.session.user)?(res.json({user:req.session.user,admin:req.session.admin})):(res.json({user:null,admin:false}))
 })
 
-router.get('/in',(req: express.Request, res: express.Response)=>{
+router.post('/',(req: express.Request, res: express.Response)=>{
     //Log de session
-    const {userName,userPassword } = req.body
+    const {user,password } = req.body
     
-    if (!userName && !userPassword) {
+    if (!user && !password) {
         res.json({status:"error",body:"completar usuario y password"})
     } else {
 
-        //@ts-ignore
-        req.session.user = userName;
-        //@ts-ignore
-        req.session.admin = (userName === process.env.useradmin && userPassword === process.env.passwordadmin);
-        //@ts-ignore
+        
+        req.session.user = user;
+        
+        console.log(req.session.user);
+        
+        
+        req.session.admin = (user === process.env.useradmin && password === process.env.passwordadmin);
+        console.log(`Ùsuario conectado ${user}`);
+        
+        
         res.json({status:"ok",admin:req.session.admin})
     }
 })
 
 router.get('/out',(req: express.Request, res: express.Response)=>{
     //Cierra la session
-    //@ts-ignore
+    
     req.session.destroy((err:any)=>{
         if (!err) res.json({status:"ok"})
         else res.json({status:"error",body:err})

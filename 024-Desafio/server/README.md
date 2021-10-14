@@ -10,5 +10,6 @@ usuario admin para logearse en la api y poder tener los privilegios root;
 
 
 ejecutar:
+
 `npm run dev`
 

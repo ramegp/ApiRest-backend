@@ -4,6 +4,8 @@ let __path = require('path');
 import { Archivo, DBMongo } from '../clases'
 
 
+import { auth } from '../middleware/log'
+
 const router = express.Router();
 
 router.get('/:id?', async (req: express.Request, res: express.Response) => {
@@ -47,14 +49,14 @@ router.get('/:id?', async (req: express.Request, res: express.Response) => {
     
 })
 
-router.post('/', (req: express.Request, res: express.Response) => {
+router.post('/', auth, (req: express.Request, res: express.Response) => {
     let obj = req.body
 
     let db = new DBMongo();
     db.addProd(obj).then((prod) => {res.json(prod)})
 })
 
-router.delete('/:id', (req: express.Request, res: express.Response) => {
+router.delete('/:id', auth, (req: express.Request, res: express.Response) => {
     let id_delete = req.params.id
 
     let db = new DBMongo();
@@ -63,7 +65,7 @@ router.delete('/:id', (req: express.Request, res: express.Response) => {
     })
 })
 
-router.put('/:id', (req: express.Request, res: express.Response) => {
+router.put('/:id',auth, (req: express.Request, res: express.Response) => {
     let id_produc = req.params.id
     let db = new DBMongo();
 
