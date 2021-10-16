@@ -117,7 +117,43 @@ const mensajes =
         edad: 25
       },
       text: 'hola como andan?'
-    }]
+    },
+    {
+      id: 7,
+      author: {
+        _id: 1,
+        id: 'ramegp@gmail.com',
+        nombre: 'Ramiro',
+        apellido: 'Gonzalez',
+        alias: 'ramegp',
+        edad: 30
+      },
+      text: 'hafhahdsa'
+    },
+    {
+      id: 8,
+      author: {
+        _id: 1,
+        id: 'ramegp@gmail.com',
+        nombre: 'Ramiro',
+        apellido: 'Gonzalez',
+        alias: 'ramegp',
+        edad: 30
+      },
+      text: 'hafhahdsa'
+    },
+    {
+      id: 9,
+      author: {
+        _id: 3,
+        id: 'julicasanovas19@gmail.com',
+        nombre: 'Julia',
+        apellido: 'Casanovas',
+        alias: 'julic',
+        edad: 30
+      },
+      text: 'hola como andan?'
+    },]
   }
 
 
@@ -133,3 +169,8 @@ const msjs = new schema.Entity('mensajes', {
 
 const normalizeData = normalize(mensajes, msjs)
 console.log(JSON.stringify(normalizeData))
+
+
+console.log(`original ${JSON.stringify(mensajes).length}`);
+
+console.log(`normalizado ${JSON.stringify(normalizeData).length}`);
