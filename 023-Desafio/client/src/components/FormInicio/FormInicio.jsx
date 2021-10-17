@@ -14,6 +14,7 @@ function FormInicio(props) {
       edad: document.getElementById("user-edad").value,
     };
     if (user.id && user.nombre && user.apellido && user.alias && user.edad) {
+      props.seters.user(user);
       props.seters.name(user);
       props.socket.emit("usuario-conectado", user);
       props.seters.log(true);
