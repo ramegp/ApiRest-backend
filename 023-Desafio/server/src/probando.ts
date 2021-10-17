@@ -1,7 +1,7 @@
 const normalizr = require('normalizr');
 
 const normalize = normalizr.normalize;
-const denormalize = normalize.denormalize;
+const denormalize = normalizr.denormalize;
 const schema = normalizr.schema;
 
 let blog = {
@@ -174,3 +174,10 @@ console.log(JSON.stringify(normalizeData))
 console.log(`original ${JSON.stringify(mensajes).length}`);
 
 console.log(`normalizado ${JSON.stringify(normalizeData).length}`);
+
+
+console.log('Desnormalizado');
+
+
+const desnormalizado = denormalize(normalizeData.result,msjs,normalizeData.entities);
+console.log(JSON.stringify(desnormalizado));

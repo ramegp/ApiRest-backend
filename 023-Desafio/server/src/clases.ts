@@ -62,9 +62,125 @@ export class ApiBackend {
      private knex_sqlite3 = require('knex')(this.options_sqlite3);
     */
 
+    normalizr = require('normalizr');
+
+    normalize = this.normalizr.normalize;
+    denormalize = this.normalizr.denormalize;
+    schema = this.normalizr.schema;
 
     private userConected: Array<any> = [];
-    private msjSalaFront: Array<any> = [];
+    private msjSalaFront = {
+        id: 0,
+        mensajes: [
+          {
+          id: 1,
+          author: {
+            _id: 1,
+            id: 'ramegp@gmail.com',
+            nombre: 'Ramiro',
+            apellido: 'Gonzalez',
+            alias: 'ramegp',
+            edad: 30
+          },
+          text: 'hola como andan?'
+        },
+        {
+          id: 2,
+          author: {
+            _id: 2,
+            id: 'ciro@gmail.com',
+            nombre: 'Ciro',
+            apellido: 'Gonzalez',
+            alias: 'cirogp',
+            edad: 2
+          },
+          text: 'hola como andan?'
+        },
+        {
+          id: 3,
+          author: {
+            _id: 3,
+            id: 'julicasanovas19@gmail.com',
+            nombre: 'Julia',
+            apellido: 'Casanovas',
+            alias: 'julic',
+            edad: 30
+          },
+          text: 'hola como andan?'
+        },
+        {
+          id: 4,
+          author: {
+            _id: 4,
+            id: 'mateo@gmail.com',
+            nombre: 'Mateo',
+            apellido: 'Fernandez',
+            alias: 'MateoF',
+            edad: 25
+          },
+          text: 'hola como andan?'
+        },
+        {
+          id: 5,
+          author: {
+            _id: 1,
+            id: 'ramegp@gmail.com',
+            nombre: 'Ramiro',
+            apellido: 'Gonzalez',
+            alias: 'ramegp',
+            edad: 30
+          },
+          text: 'hafhahdsa'
+        },
+        {
+          id: 6,
+          author: {
+            _id: 4,
+            id: 'mateo@gmail.com',
+            nombre: 'Mateo',
+            apellido: 'Fernandez',
+            alias: 'MateoF',
+            edad: 25
+          },
+          text: 'hola como andan?'
+        },
+        {
+          id: 7,
+          author: {
+            _id: 1,
+            id: 'ramegp@gmail.com',
+            nombre: 'Ramiro',
+            apellido: 'Gonzalez',
+            alias: 'ramegp',
+            edad: 30
+          },
+          text: 'hafhahdsa'
+        },
+        {
+          id: 8,
+          author: {
+            _id: 1,
+            id: 'ramegp@gmail.com',
+            nombre: 'Ramiro',
+            apellido: 'Gonzalez',
+            alias: 'ramegp',
+            edad: 30
+          },
+          text: 'hafhahdsa'
+        },
+        {
+          id: 9,
+          author: {
+            _id: 3,
+            id: 'julicasanovas19@gmail.com',
+            nombre: 'Julia',
+            apellido: 'Casanovas',
+            alias: 'julic',
+            edad: 30
+          },
+          text: 'hola como andan?'
+        },]
+      }
 
     constructor(port: number) {
         
@@ -166,8 +282,10 @@ export class ApiBackend {
     private configConexionReact = (socket: any) => {
         //conexion con el front
         socket.on('msj-user',(data:any)=>{
-            this.msjSalaFront.push(data);
-            this.io.emit('mensajes',this.msjSalaFront)
+            data.id = this.msjSalaFront.mensajes.length + 1;
+            
+            this.msjSalaFront.mensajes.push(data);
+            this.io.emit('mensajes',this.normalizarMensaje())
         })
         socket.on('usuario-conectado',(data:any)=>{
             let obj = {
@@ -176,14 +294,28 @@ export class ApiBackend {
             }
             this.userConected.push(obj)
             this.io.emit('usuarios-conectados',this.userConected)
-            console.log(`Conectados ${this.userConected.length}`)
+            //console.log(`Conectados ${this.userConected.length}`)
         })
         this.io.emit('usuarios-conectados',this.userConected);
-        this.io.emit('mensajes',this.msjSalaFront);
+        this.io.emit('mensajes',this.normalizarMensaje());
     }
 
    
+    private normalizarMensaje = () => {
+        const autor = new this.schema.Entity('author',{idAttribute:'id'})
 
+        const msj = new this.schema.Entity('mensaje', {
+        author: autor
+        })
+
+        const msjs = new this.schema.Entity('mensajes', {
+        mensajes: [msj]
+        })
+
+        const normalizeData = this.normalize(this.msjSalaFront, msjs)
+
+        return normalizeData
+    }
     
 
 }
