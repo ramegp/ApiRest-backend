@@ -1,0 +1,10 @@
+.menu-links{
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: 1.3rem;
+}
+
+
+.menu-links:hover{
+    color: rgb(221, 135, 101);
+}

@@ -1,0 +1,20 @@
+.container-page-products{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table{
+    border: 2px solid black;
+    padding: 5px;
+}
+
+table tr{
+    margin: 3px;
+    border-bottom: 1px solid green;
+}
+
+table td {
+    padding: 10px;
+}

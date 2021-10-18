@@ -1,0 +1,14 @@
+.container-page-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-form{
+    margin: 10px;
+    border: 2px solid gray;
+    padding: 10px;
+    border-radius: 7px;
+    width: 50%;
+}
