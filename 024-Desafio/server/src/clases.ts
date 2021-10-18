@@ -114,9 +114,10 @@ export class ApiBackend {
             secret: "secreto",
             resave: true,
             saveUninitialized: true,
+            rolling:true,
             cookie: {
                 secure: false,
-               /*  maxAge: 10000 */
+                maxAge: 10000
             }
         }))
 

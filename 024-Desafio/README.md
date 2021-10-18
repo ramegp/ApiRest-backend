@@ -2,7 +2,7 @@
 
 En una terminal hacer
 `cd server`
-`ǹpm run dev`
+`npm run dev`
 
 En otra terminal sin cerrar la otra
 `cd client`

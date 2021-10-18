@@ -1,91 +1,72 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Menu from './components/Menu/Menu';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
 import { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import './App.css';
-import EnviarMsj from './components/EnviarMsj/EnviarMsj';
-import FormInicio from './components/FormInicio/FormInicio';
-import MensajesUsuarios from './components/MensajesUsuarios/MensajesUsuarios';
-
-import io from 'socket.io-client'
-import Conectados from './components/Conectados/Conectados';
-const Mensajes = [
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasdadasdasasda das dasd asd adjkdhlaj hahfla",
-    date: Date.now()
-  },
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasdadasdasjkdhlaj hahfla",
-    date: Date.now()
-  },
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadasdasjkdhlaj hahfla",
-    date: Date.now()
-  },
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadasdasjkdhlaj hahfla",
-    date: Date.now()
-  },{
-    user:"ramiro",
-    msg:"Buenos dias asdasdasasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadasdasjkdhlaj hahfla",
-    date: Date.now()
-  },
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadasdasjkdhlaj hahfla",
-    date: Date.now()
-  },
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadasdasjkdhlaj hahfla",
-    date: Date.now()
-  },
-  {
-    user:"ramiro",
-    msg:"Buenos dias asdasdasasdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadadasdasjkdhlaj hahfla",
-    date: Date.now()
-  }
-]
-
-
-const socket = io('http://localhost:8080');
+import Products from './pages/Products/Products';
+import axios from 'axios';
 
 function App() {
-  const [name, setname] = useState(null)
-  const [logeado, setlogeado] = useState(false)
-
-  const [mensajes, setmensajes] = useState(null)
-
-  socket.on('msj-server',(data)=>{console.log(data);})
+  const [user_name, setuser_name] = useState(null)
+  const [admin, setadmin] = useState(false)
+  const [products, setproducts] = useState(null)
   useEffect(() => {
-    socket.on('mensajes',(msj)=>{setmensajes(msj)})
+    axios({
+      method: "get",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+            mode: "cors",
+      url: 'http://localhost:8080/log/'
+    })
+      .then((data)=>{
+        setuser_name(data.data.user);
+        setadmin(data.data.admin);
+      });
+      axios({
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        mode: "cors",
+        url: "http://localhost:8080/products",
+      }).then((data) => {
+        setproducts(data.data)
+      });
   }, [])
   return (
-    <>
-    <div  className="titulo"><h3>Sala de Chat</h3></div>
-    {(logeado?(<Container className='containerChat'>
-      <Row className="containerRow">
-        <Col xs className="Chat-usuarios">
+    <Router>
 
-            <Conectados socket={socket}/>
-        </Col>
-        <Col lg={9} className="Chat-mensajes">
-          <div className="mensajes-all">
-          {mensajes.map((m,i)=>{return(
-            <MensajesUsuarios name={m.author.id} msg={m.text} date={m.author.alias} socket={socket}/>
-            
-            )})}
-          </div>
-          <EnviarMsj user={name} socket={socket}></EnviarMsj>
-        </Col>
-      </Row>
-    </Container>):(<FormInicio seters={{name:setname,log:setlogeado}} socket={socket}/>))}
-    
-    
-  </>
+      <div>
+        <Menu seters={{user:setuser_name,admin:setadmin,products:setproducts}} geters={{user:user_name,admin:admin}}/>
+        <Switch>
+          
+          <Route path="/login">
+            <Login seters={{user:setuser_name,admin:setadmin}} geters={{user:user_name,admin:admin}}></Login>
+          </Route>
+
+          <Route path="/products">
+            <Products seters={{user:setuser_name,admin:setadmin}} geters={{user:user_name,admin:admin}}></Products>
+          </Route>
+
+          <Route path="/">
+            <Home seters={{user:setuser_name,admin:setadmin,products:setproducts}} geters={{user:user_name,admin:admin,products:products}}></Home>
+          </Route>
+        </Switch>
+      </div>
+
+    </Router>
   );
 }
 
