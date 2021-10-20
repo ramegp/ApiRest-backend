@@ -1,11 +1,12 @@
-import { MsjChat, Producto } from "./Interfaces";
+import { MsjChat, Producto, UsuarioPassport } from "./Interfaces";
 
 export class DBMongo {
     prod_connect = require('../database/db-products').connect
     prod_disconnect = require('../database/db-products').disconnect;
     msg_connect = require('../database/db-messages').connect;
     msg_disconnect = require('../database/db-messages').disconnect;
-
+    users_connect = require('../database/db-users').connect;
+    users_disconnect = require('../database/db-users').disconnect;
 
     constructor() {
 
@@ -175,5 +176,28 @@ export class DBMongo {
             default:
                 break;
         }
+    }
+
+    //Metodos para manejar las sessiones de usuarios Passport
+
+    addSessionPassport = async (user:UsuarioPassport) => {
+        let db = this.users_connect();
+        let user_created = await db?.UserSessionModel.create(user)
+        this.users_disconnect()
+        return user_created
+    }
+
+    findUserByEmail = async (email: string) => {
+        let db = this.users_connect();
+        let user_search = await db?.UserSessionModel.find({ user: email });
+        this.users_disconnect()
+        return user_search
+    }
+
+    findUserById = async (id:string) => {
+        let db = this.users_connect();
+        let user_search  = await db?.UserSessionModel.find({ _id: id })
+        this.users_disconnect()
+        return user_search 
     }
 }

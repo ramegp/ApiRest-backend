@@ -21,3 +21,14 @@ export interface Author {
     alias: string,
     edad: number
 }
+
+export interface UsuarioPassport {
+    user: string,
+    pass: string
+}
+
+export interface UsuarioPassportMongo {
+    _id:string;
+    user: string,
+    pass: string
+}

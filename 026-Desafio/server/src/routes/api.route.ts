@@ -15,7 +15,7 @@ const ruta_error = require('./error.route');
 
 router.use('/admin',ruta_admin);
 router.use('/cart',ruta_cart);
-router.use('/log',ruta_log);
+router.use('/sing',ruta_log);
 router.use('/messages',ruta_messages);
 router.use('/products',ruta_products);
 router.use('',ruta_error)

@@ -1,4 +1,11 @@
+import { DBMongo } from "./DBMongo";
+import { UsuarioPassport, UsuarioPassportMongo } from "./Interfaces";
 import { SalaChat } from "./SalaChat";
+
+
+import bCrypt = require('bcrypt');
+import { Strategy as LocalStrategy } from 'passport-local'
+
 
 export class ApiBackend {
     private express = require("express")
@@ -35,7 +42,7 @@ export class ApiBackend {
     //Route General
     private routes_api: any;
 
-    
+
     private port: number;
     private api_route: any = [];
     prod: any = []
@@ -45,14 +52,92 @@ export class ApiBackend {
     private userConected: Array<any> = [];
     private msjSalaFront: Array<any> = [];
 
+    private passport = require('passport');
 
     constructor(port: number) {
+
+        /* this.passport.use('login', new LocalStrategy({
+            passReqToCallback: true
+        },
+            function (req, username, password, done) {
+                // check in mongo if a user with username exists or not
+                const db = new DBMongo();
+                db.findUserByEmail(username).then((user: UsuarioPassportMongo) => {
+                    if (!user) {
+                        console.log('User Not Found with username ' + username);
+                        console.log('message', 'User Not found.');
+                        return done(null, false)
+                    } else {
+                        // User exists but wrong password, log the error 
+                        if (!isValidPassword(user, password)) {
+                            console.log('Invalid Password');
+                            console.log('message', 'Invalid Password');
+                            return done(null, false)
+                        }
+                        // User and password both match, return user from 
+                        // done method which will be treated like success
+                        return done(null, user);
+                    }
+                })
+
+            })
+        );
+
+        var isValidPassword = function (user: UsuarioPassport, password: string) {
+            return bCrypt.compareSync(password, user.pass);
+        }
+
+        this.passport.use('register', new LocalStrategy({
+            passReqToCallback: true
+        },
+            function (req, username, password, done) {
+
+                const findOrCreateUser = function () {
+                    // find a user in Mongo with provided username
+                    const db = new DBMongo();
+                    db.findUserByEmail(username).then((user: UsuarioPassportMongo) => {
+                        if (user) {
+                            console.log('User already exists');
+                            console.log('message', 'User Already Exists');
+                            return done(null, false)
+                        } else {
+                            let newUser = {
+                                user: username,
+                                pass: createHash(password)
+                            }
+                            db.addSessionPassport(newUser).then((user: any) => {
+                                console.log('User Registration succesful');
+                                return done(null, newUser);
+                            })
+                        }
+                    })
+
+                }
+                // Delay the execution of findOrCreateUser and execute 
+                // the method in the next tick of the event loop
+                process.nextTick(findOrCreateUser);
+            })
+        )
+        // Generates hash using bCrypt
+        var createHash = function (password: string) {
+            return bCrypt.hashSync(password, bCrypt.genSaltSync(10));
+        }
+        this.passport.serializeUser((user: any, done:any) => {
+            done(null, user._id);
+        });
+
+        this.passport.deserializeUser(function (id: string, done:any) {
+            const db = new DBMongo();
+            db.findUserById(id).then((user: any) => { done(null, user) })
+
+        });
+ */
 
         var env = require('node-env-file'); // .env file
         env(__dirname + '/../../.env');
 
         this.port = port
-        
+
         this.routes_api = require('../routes/api.route')
 
         this.app.use(this.cors({
@@ -69,7 +154,7 @@ export class ApiBackend {
             secret: "secreto",
             resave: true,
             saveUninitialized: true,
-            rolling:true,
+            rolling: true,
             cookie: {
                 secure: false,
                 maxAge: 10000
@@ -80,14 +165,19 @@ export class ApiBackend {
         this.app.use(this.express.text())
         this.app.use(this.express.urlencoded({ extended: true }))
 
+        //passport
+        this.app.use(this.passport.initialize())
+        this.app.use(this.passport.session())
 
-        this.app.set('views', __dirname + '/views');
-        this.app.set('view engine', 'ejs')
+        //Cargo las rutas
+        this.app.use('', this.routes_api)
 
-        this.app.use('',this.routes_api)
-        
+        //Carpeta public
         this.app.use(this.express.static(__dirname + '/public'));
 
+        this.server.listen(this.port, () => {
+            //console.log(`servidor inicializado en el puerto ${this.port}`);
+        });
 
         this.metodoSocket()
 
