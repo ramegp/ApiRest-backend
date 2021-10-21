@@ -200,4 +200,19 @@ export class DBMongo {
         this.users_disconnect()
         return user_search 
     }
+    findUserOrCreate = async (email: string,newUser:UsuarioPassport) => {
+        let db = this.users_connect();
+        let user_search = await db?.UserSessionModel.find({ user: email });
+
+        if (user_search.length == 0) {
+            let user_created = await db?.UserSessionModel.create(newUser)
+            console.log("Usuario creado");
+            return user_created
+        }
+
+        console.log('Usuario Existe');
+        
+        this.users_disconnect()
+        return {}
+    }
 }
