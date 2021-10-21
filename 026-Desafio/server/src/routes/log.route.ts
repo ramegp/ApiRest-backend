@@ -18,19 +18,26 @@ passport.use('login', new LocalStrategy({
     // check in mongo if a user with username exists or not
     const db = new DBMongo();
     db.findUserByEmail(username).then((user:UsuarioPassportMongo)=>{
+        //console.log(`user ${user}`);
+        //console.log(`password ${password}`);
+        
         if (!user) {
             console.log('User Not Found with username '+username);
             console.log('message', 'User Not found.');                 
             return done(null, false)
         } else {
             // User exists but wrong password, log the error 
-            if (!isValidPassword(user, password)){
+            //user es un arreglo que tiene en la primera posicion el user
+            //@ts-ignore
+            if (!isValidPassword(user[0], password)){
                 console.log('Invalid Password');
                 console.log('message', 'Invalid Password');
                 return done(null, false) 
             }
             // User and password both match, return user from 
             // done method which will be treated like success
+            console.log(`login user ${user}`);
+            
             return done(null, user);
             }
     })
@@ -38,7 +45,11 @@ passport.use('login', new LocalStrategy({
   })
 );
 
-var isValidPassword = function(user:UsuarioPassport, password:string){
+var isValidPassword = function(user:UsuarioPassportMongo, password:string){
+    console.log(`user pass ${user.pass}`);
+    console.log(`password ${password}`);
+    
+    
   return bCrypt.compareSync(password, user.pass);
 }
 
@@ -46,47 +57,43 @@ passport.use('register', new LocalStrategy({
     passReqToCallback : true
   },
   function(req, username, password, done) {
-      
-      const findOrCreateUser = function(){
+      let agregar = false;
+
+      const findOrCreateUser =  function(){
           // find a user in Mongo with provided username
           const db = new DBMongo();
-         
-          db.findUserByEmail(username).then((user:UsuarioPassportMongo)=>{
-              console.log(username);
-              console.log((user));
-              
-              //@ts-ignore
-              if (user.length != 0) {
-                  console.log('User already exists');
-                  console.log('message','User Already Exists');
-                  return done(null, false)
-              } else {
+          let newUser = {
+            user:username,
+            pass: createHash(password)
+        }
+        db.findUserOrCreate(username,newUser).then((user:UsuarioPassportMongo|any)=>{
+            if (Object.keys(user).length == 0) {
+                
+               return done(null,false)
+            } else {
+                return done(null,user)
+                
+            }
                   
-                  let newUser = {
-                      user:username,
-                      pass: createHash(password)
-                  }
-                  const baseDatos = new DBMongo();
-                  baseDatos.addSessionPassport(newUser).then((user:any)=>{
-                      console.log('User Registration succesful');    
-                      return done(null, newUser);
-                  })
-              }
-          })
+        })
 
-
-          
     }
+
+    
     // Delay the execution of findOrCreateUser and execute 
     // the method in the next tick of the event loop
     process.nextTick(findOrCreateUser);
+    
   })
 )
   // Generates hash using bCrypt
 var createHash = function(password:string){
-  return bCrypt.hashSync(password, bCrypt.genSaltSync(10));
+    //@ts-ignore
+  return bCrypt.hashSync(password, bCrypt.genSaltSync(10),null);
 }
-passport.serializeUser((user:any, done) => {
+passport.serializeUser(function(user:any, done) {
+    console.log(`serializer user ${user}`);
+    
     done(null, user._id);
 });
    
