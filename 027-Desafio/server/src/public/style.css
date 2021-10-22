@@ -1,0 +1,97 @@
+.titulo-form{
+    color:rgb(79, 180, 158);
+    text-shadow: 0px 3px 7px black;
+    word-spacing: 5px;
+    letter-spacing: 5px;
+}
+.form{
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px black;
+}
+.label-form{
+    font-size: 18px;
+}
+
+.input-form:default{
+    color: red;
+}
+.vista-products{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.producto-card:hover{
+    transform: scale(1.12);
+}
+.producto-card{
+    background-color: rgb(103, 150, 128);
+    border-radius: 10px;
+    width: 300px;
+    height: 150px;
+    margin: 10px;
+    box-shadow: 0px 3px 8px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    transition: all 0.9s;
+}
+.producto-card .producto-card-titulo{
+    text-align: center;
+    font-size: 17px;
+    font-weight: bolder;
+}
+.producto-card-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.producto-card-img{
+    margin-left: 50px;
+    width: 50px;
+}
+
+.container-chat{
+    padding: 7px;
+    border-radius: 10px;
+    height: 70vh;
+    background-color: brown;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.container-chat .chat-msj{
+    display: table;
+    padding: 7px;
+    border-radius: 10px;
+    background-color: rgb(111, 184, 150);
+    margin-bottom: 7px;
+    box-shadow: 0px 3px 8px black;
+}
+.container-chat .chat-msj .chat-msj-usuario-hora{
+    color: rgb(77, 75, 75);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.probando1{
+    
+}
+
+.probando1quitar{
+    display: none;
+}
+
+.probando2quitar{
+    display: none;
+}
+
+.probando2{
+    width: 100%;
+}
+
+.probando2 .card-product{
+    width: 300px;
+}
