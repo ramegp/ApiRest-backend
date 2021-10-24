@@ -207,7 +207,9 @@ export class DBMongo {
         if (user_search.length == 0) {
             let user_created = await db?.UserSessionModel.create(newUser)
             console.log("Usuario creado");
+            this.users_disconnect()
             return user_created
+
         }
 
         console.log('Usuario Existe');

@@ -56,83 +56,6 @@ export class ApiBackend {
 
     constructor(port: number) {
 
-        /* this.passport.use('login', new LocalStrategy({
-            passReqToCallback: true
-        },
-            function (req, username, password, done) {
-                // check in mongo if a user with username exists or not
-                const db = new DBMongo();
-                db.findUserByEmail(username).then((user: UsuarioPassportMongo) => {
-                    if (!user) {
-                        console.log('User Not Found with username ' + username);
-                        console.log('message', 'User Not found.');
-                        return done(null, false)
-                    } else {
-                        // User exists but wrong password, log the error 
-                        if (!isValidPassword(user, password)) {
-                            console.log('Invalid Password');
-                            console.log('message', 'Invalid Password');
-                            return done(null, false)
-                        }
-                        // User and password both match, return user from 
-                        // done method which will be treated like success
-                        return done(null, user);
-                    }
-                })
-
-            })
-        );
-
-        var isValidPassword = function (user: UsuarioPassport, password: string) {
-            return bCrypt.compareSync(password, user.pass);
-        }
-
-        this.passport.use('register', new LocalStrategy({
-            passReqToCallback: true
-        },
-            function (req, username, password, done) {
-
-                const findOrCreateUser = function () {
-                    // find a user in Mongo with provided username
-                    const db = new DBMongo();
-                    db.findUserByEmail(username).then((user: UsuarioPassportMongo) => {
-                        if (user) {
-                            console.log('User already exists');
-                            console.log('message', 'User Already Exists');
-                            return done(null, false)
-                        } else {
-                            let newUser = {
-                                user: username,
-                                pass: createHash(password)
-                            }
-                            db.addSessionPassport(newUser).then((user: any) => {
-                                console.log('User Registration succesful');
-                                return done(null, newUser);
-                            })
-                        }
-                    })
-
-                }
-                // Delay the execution of findOrCreateUser and execute 
-                // the method in the next tick of the event loop
-                process.nextTick(findOrCreateUser);
-            })
-        )
-        // Generates hash using bCrypt
-        var createHash = function (password: string) {
-            return bCrypt.hashSync(password, bCrypt.genSaltSync(10));
-        }
-        this.passport.serializeUser((user: any, done:any) => {
-            done(null, user._id);
-        });
-
-        this.passport.deserializeUser(function (id: string, done:any) {
-            const db = new DBMongo();
-            db.findUserById(id).then((user: any) => { done(null, user) })
-
-        });
- */
-
         var env = require('node-env-file'); // .env file
         env(__dirname + '/../../.env');
 
@@ -165,10 +88,6 @@ export class ApiBackend {
         this.app.use(this.express.text())
         this.app.use(this.express.urlencoded({ extended: true }))
 
-        //passport
-        this.app.use(this.passport.initialize())
-        this.app.use(this.passport.session())
-
         //Cargo las rutas
         this.app.use('', this.routes_api)
 
@@ -181,7 +100,7 @@ export class ApiBackend {
 
         this.metodoSocket()
 
-        //this.app.locals.admin = true;
+        
 
     }
 
