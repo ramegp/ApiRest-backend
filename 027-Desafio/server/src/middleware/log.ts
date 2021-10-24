@@ -2,6 +2,11 @@ import express = require("express");
 
 export import jwt = require('jsonwebtoken');
 
+const env = require('node-env-file')
+env(__dirname + '/../../.env')
+
+const MY_SECRET_KEY = process.env.SECRET_KEY || "miclaveprivada"
+
 export const auth = (req: express.Request, res: express.Response,next:any)=>{
     
     console.log(`${req.session.user} == ${process.env.useradmin}`);
@@ -18,7 +23,7 @@ export const auth = (req: express.Request, res: express.Response,next:any)=>{
 
 export const generateAuthToken = function (nombre: string) {
     const token = jwt.sign(
-      { nombre: nombre }, "myprivatekey", { expiresIn: '60s' }
+      { nombre: nombre }, MY_SECRET_KEY, { expiresIn: '60s' }
     ); //get the private key from the config file -> environment variable
     return token;
 };
@@ -37,7 +42,8 @@ export const authJWT = function (req: express.Request, res: express.Response,nex
   
     try {
       //if can verify the token, set req.user and pass to next middleware
-      const decoded = jwt.verify(token.toString(), "myprivatekey");
+      //@ts-ignore
+      const decoded = jwt.verify(token.split(" ")[1], MY_SECRET_KEY);
       req.user = decoded;
       next();
     } catch (ex) {
@@ -47,3 +53,4 @@ export const authJWT = function (req: express.Request, res: express.Response,nex
       return res.json({error: 'if invalid token'})
     }
 };
+

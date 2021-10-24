@@ -100,6 +100,8 @@ export class ApiBackend {
 
         this.metodoSocket()
 
+        
+
     }
 
     listening = (): number => {

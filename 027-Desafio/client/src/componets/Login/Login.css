@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
+
+.contenedor-formularios {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 30px black;
+  justify-content: space-around;
+  margin-bottom: 30px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 500px;
+  background-image: url("https://www.wallpapertip.com/wmimgs/63-634951_digital-art-simple-backgrounds-wallpapers-hd-desktop-android.png");
+}
+
+.contenedor-formularios {
+  background-color: #222;
+  border-radius: 15px;
+  height: 550px;
+  width: 350px;
+  position: relative;
+  overflow: hidden;
+}
+.titulo-formulario{
+    font-family: 'Fira Sans';
+    color: white;
+}
+
+.contenedor-formularios .form-singin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedor-formularios .form-singup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: -10px;
+}
+
+.contenedor-formularios .form-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* border-radius: 15px;
+    background-color: #fff;
+    overflow: hidden;
+    margin-top: 50px;
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: all 0.3s ease; */
+}
+
+.span-click {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+}
+.span-click:hover {
+  color: rgb(255, 255, 255);
+}
+.singin-slide-up {
+}
+
+.form-holder .input {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  padding: 8px 15px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  font-size: 12px;
+  border-radius: 10px;
+  margin: 5px 0px;
+}
+.form-holder .input:last-child {
+  border-bottom: 0;
+}
+.form-holder .input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.form-holder .btn-submit {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.7);
+  border: 0;
+  border-radius: 15px;
+  display: block;
+  margin: 15px auto;
+  padding: 15px 45px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: all 0.3s ease;
+}
+.form-holder .btn-submit:hover {
+  transition: all 0.3s ease;
+  background-color: rgba(31, 116, 63, 0.8);
+  color:white;
+}
