@@ -10,3 +10,8 @@ en la ruta localhost:8080/sing/in enviar un objeto {username:"email",password:"c
 
 Tambien podemos ejecutar con:
 `npx ts-node src/main.ts PORT=<numero> MODO=<fork o cluster>`
+
+
+Utilizamos el middleware de compresion de node para la compresion de gzip en la aplicacion Express.
+
+Utilizamos com logger log4js

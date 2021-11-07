@@ -6,7 +6,7 @@ import { DBMongo } from "../utils/DBMongo";
 let __path = require('path');
 const router = express.Router();
 
-router.get('/:id?', authJWT ,async (req: express.Request, res: express.Response) => {
+router.get('/:id?',async (req: express.Request, res: express.Response) => {
     let id_show = req.params.id
     let {nombre, preciomax, preciomin, codigo, stockmax, stockmin} = req.query
     let db = new DBMongo();

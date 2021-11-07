@@ -6,6 +6,7 @@ import { SalaChat } from "./SalaChat";
 import bCrypt = require('bcrypt');
 import { Strategy as LocalStrategy } from 'passport-local'
 
+import { loggerInfo, loggerError, loggerWarn } from '../helpers/logHandler'
 
 export class ApiBackend {
     //Servidor modo cluster
@@ -29,19 +30,6 @@ export class ApiBackend {
 
     private cors = require('cors');
 
-    private config = {
-        application: {
-            cors: {
-                server: [
-                    {
-                        origin: "localhost:3000", //servidor que deseas que consuma o (*) en caso que sea acceso libre
-                        credentials: true
-                    }
-                ]
-            }
-        }
-    }
-
     private session = require("express-session");
     private MongoStore = require('connect-mongo');
     private advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -59,6 +47,9 @@ export class ApiBackend {
     private msjSalaFront: Array<any> = [];
 
     private passport = require('passport');
+
+    //middlewate de
+    private compression = require('compression');
 
     constructor(port: number, modo_servidor: string) {
 
@@ -134,11 +125,14 @@ export class ApiBackend {
         //Cargo las rutas
         this.app.use('', this.routes_api)
 
+        //Middleware de compresion no funciona
+        this.app.use(this.compression)
+
         //Carpeta public
         this.app.use(this.express.static(__dirname + '/public'));
 
         this.server.listen(this.port, () => {
-            console.log(`Servidor express escuchando en el puerto ${this.port} - PID WORKER ${process.pid}`)
+            loggerInfo.info(`Servidor express escuchando en el puerto ${this.port} - PID WORKER ${process.pid}`)
             //console.log(`servidor inicializado en el puerto ${this.port}`);
         });
 
