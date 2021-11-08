@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import { loggerError, loggerInfo } from "../helpers/logHandler";
 import { UserModel } from "./products/products.model";
 
 const env = require('node-env-file')
@@ -27,10 +28,12 @@ export const connect = () => {
   database = Mongoose.connection;
 
   database.once("open", async () => {
-    console.log("Connected to database");
+    loggerInfo.info(`Conectado a la base de datos de los productos`)
   });
 
   database.on("error", () => {
+    loggerError.error(`Error al conectarse a la base de datos`)
+    loggerInfo.error(`Error al conectarse a la base de datos`)
     console.log("Error connecting to database");
   });
 
@@ -45,6 +48,6 @@ export const disconnect = () => {
   }
 
   Mongoose.disconnect();
-  console.log("disconnect to database");
+  loggerInfo.info(`Desconectado de la base de datos de los productos`)
   
 };

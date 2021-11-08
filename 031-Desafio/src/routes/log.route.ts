@@ -8,6 +8,7 @@ import bCrypt = require('bcrypt');
 import { jwt, authJWT, generateAuthToken } from '../middleware/log';
 
 import { UsuarioPassport, UsuarioPassportMongo } from "../utils/Interfaces";
+import { loggerInfo, loggerWarn } from "../helpers/logHandler";
 
 const router = express.Router();
 
@@ -34,31 +35,44 @@ router.post('/in', (req: express.Request, res: express.Response) => {
         user: req.body.username,
         pass: req.body.password
     }
-    console.log(userRegister);
+
+    if (userRegister.user & userRegister.pass) {
+        
+        const db = new DBMongo()
+        db.findUserByEmail(userRegister.user).then((user: any) => {
     
-    const db = new DBMongo()
-    db.findUserByEmail(userRegister.user).then((user: any) => {
-
-        if (user.length != 0) {
-            
-            let credencialesOk = user[0].user == userRegister.user && isValidPassword(user[0],userRegister.pass)
-
-            if (credencialesOk) {
-
-                const token = generateAuthToken(user.user);
-                res.header("x-auth-token", token).json({
-                    username: user[0].user,
-                    token
-                });
+            if (user.length != 0) {
+                
+                let credencialesOk = user[0].user == userRegister.user && isValidPassword(user[0],userRegister.pass)
+    
+                if (credencialesOk) {
+    
+                    const token = generateAuthToken(user.user);
+                    loggerInfo.info(`Usuario ${user[0].user} inicio sesion ${(new Date).toDateString()}`)
+                    res.header("x-auth-token", token).json({
+                        username: user[0].user,
+                        token
+                    });
+                }
+                else {
+                    loggerInfo.warn(`Intento Fallido de inicio de sesion - Error en las credenciales`);
+                    loggerWarn.warn(`Intento Fallido de inicio de sesion - Error en las credenciales`);
+                    res.json({ error: 'error de credenciales' });
+                }
             }
             else {
-                res.json({ error: 'error de credenciales' });
+                loggerInfo.warn(`Intento Fallido de inicio de sesion - Usuario no existe`);
+                loggerWarn.warn(`Intento Fallido de inicio de sesion - Usuario no existe`);
+                res.json({ error: 'usuario no existe' });
             }
-        }
-        else {
-            res.json({ error: 'usuario no existe' });
-        }
-    })
+        })
+    } else {
+        loggerWarn.warn(`No se puede iniciar sesion sin username y password -- Ruta sing/in `)
+        loggerInfo.warn(`No se puede iniciar sesion sin username y password -- Ruta sing/in ${(new Date)}`)
+        
+        res.json({error:"Falta pasar username y password"})
+    }
+    
 
 })
 
@@ -72,27 +86,41 @@ router.get('/up', (req: express.Request, res: express.Response) => {
 })
 
 router.post('/up', (req: express.Request, res: express.Response) => {
-    let { username, password } = req.body
-    let userRegister = {
-        user: req.body.username,
-        pass: createHash(req.body.password)
-    }
+    if (req.body.username & req.body.password) {
+        
+        let { username, password } = req.body
+        let userRegister = {
+            user: req.body.username,
+            pass: createHash(req.body.password)
+        }
+        
+        
+        const db = new DBMongo()
+        db.findUserOrCreate(userRegister.user, userRegister).then((user: any) => {
     
-    const db = new DBMongo()
-    db.findUserOrCreate(userRegister.user, userRegister).then((user: any) => {
-
-        if (Object.keys(user).length == 0) {
-            res.json({ error: 'Ya existe el email' });
-        }
-        else {
-
-            const token = generateAuthToken(user.user);
-            res.header("x-auth-token", token).json({
-                username: user.user,
-                token
-            });
-        }
-    })
+            if (Object.keys(user).length == 0) {
+                loggerWarn.warn(`Usuario ya registrado con ese mail`);
+                loggerInfo.warn(`Usuario ya registrado con ese mail`);
+                
+                res.json({ error: 'Ya existe el email' });
+            }
+            else {
+    
+                const token = generateAuthToken(user.user);
+                loggerInfo.info(`Usuario creado ${user.user}`)
+                res.header("x-auth-token", token).json({
+                    username: user.user,
+                    token
+                });
+            }
+        })
+    } else {
+        loggerWarn.warn(`Faltan pasar username y password para la ruta /sing/up `)
+        loggerInfo.warn(`Faltan pasar username y password para la ruta /sing/up `)
+        
+        res.json({error:"Falta pasar username y password"})
+        
+    }
 })
 
 router.get('/failregister', (req: express.Request, res: express.Response) => {

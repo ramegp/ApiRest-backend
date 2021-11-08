@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import { loggerError, loggerInfo } from "../helpers/logHandler";
 import { MessagesModel } from "./messages/messages.model";
 
 const env = require('node-env-file')
@@ -25,10 +26,13 @@ export const connect = () => {
   database = Mongoose.connection;
 
   database.once("open", async () => {
-    console.log("Connected to database messages");
+    loggerInfo.info(`Conectado a la base de datos de los mensajes`);
+    
   });
 
   database.on("error", () => {
+    loggerError.error(`Error al conectar a la base de datos de los mensajes`)
+    loggerInfo.error(`Error al conectar a la base de datos de los mensajes`)
     console.log("Error connecting to database");
   });
 
@@ -43,5 +47,5 @@ export const disconnect = () => {
   }
 
   Mongoose.disconnect();
-  console.log('Disconnect to database messages')
+  loggerInfo.info(`Desconectado de la base de datos de los mensajes`)
 };
