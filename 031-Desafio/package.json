@@ -30,6 +30,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@types/compression": "^1.7.2",
     "bcrypt": "^5.0.1",
     "cluster": "^0.7.7",
     "compression": "^1.7.4",
