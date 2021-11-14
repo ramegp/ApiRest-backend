@@ -1,0 +1,291 @@
+Statistical profiling result from isolate-0x566af60-8374-v8.log, (127 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+     72   56.7%          /usr/bin/node
+     41   32.3%          /usr/lib/x86_64-linux-gnu/libc-2.31.so
+     10    7.9%          /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+      4    3.1%          /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+      0    0.0%    NaN%  JavaScript
+      0    0.0%    NaN%  C++
+      1    0.8%  Infinity%  GC
+    127  100.0%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+     72   56.7%  /usr/bin/node
+     57   79.2%    /usr/bin/node
+     18   31.6%      Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+     18  100.0%        Function: ^nativeModuleRequire node:internal/bootstrap/loaders:332:29
+     14   77.8%          LazyCompile: ~hasEsmSyntax node:internal/modules/cjs/helpers:204:22
+     14  100.0%            LazyCompile: ~enrichCJSError node:internal/modules/esm/translators:152:24
+      3   16.7%          Function: ~<anonymous> node:tty:1:1
+      3  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    5.6%          LazyCompile: ~createWritableStdioStream node:internal/bootstrap/switches/is_main_thread:41:35
+      1  100.0%            LazyCompile: ~getStderr node:internal/bootstrap/switches/is_main_thread:133:19
+     17   29.8%      LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+     17  100.0%        LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      4   23.5%          LazyCompile: ~initializeCJSLoader node:internal/bootstrap/pre_execution:422:29
+      4  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      3   17.6%          Function: ~<anonymous> node:internal/modules/esm/loader:1:1
+      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2   11.8%          Function: ~<anonymous> node:internal/process/esm_loader:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2   11.8%          Function: ~<anonymous> node:internal/modules/esm/load:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2   11.8%          Function: ~<anonymous> node:internal/modules/esm/get_source:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    5.9%          Function: ~<anonymous> node:internal/source_map/source_map_cache:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    5.9%          Function: ~<anonymous> node:internal/modules/esm/module_map:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    5.9%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    5.9%          Function: ~<anonymous> node:internal/bootstrap/pre_execution:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      4    7.0%      /usr/bin/node
+      2   50.0%        LazyCompile: ~compileFunction node:vm:308:25
+      2  100.0%          LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1017:18
+      2  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1055:37
+      1   25.0%        LazyCompile: ~pp$9.readWord node:internal/deps/acorn/acorn/dist/acorn:5486:27
+      1  100.0%          LazyCompile: ~pp$9.readToken node:internal/deps/acorn/acorn/dist/acorn:4759:28
+      1  100.0%            LazyCompile: ~pp$9.nextToken node:internal/deps/acorn/acorn/dist/acorn:4747:28
+      1   25.0%        LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:494:28
+      1  100.0%          LazyCompile: ~resolveMainPath node:internal/modules/run_main:11:25
+      1  100.0%            LazyCompile: ~executeUserEntryPoint node:internal/modules/run_main:74:31
+      2    3.5%      LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      2  100.0%        Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    1.8%      LazyCompile: ~toPathIfFileURL node:internal/url:1496:25
+      1  100.0%        LazyCompile: ~realpathSync node:fs:2408:22
+      1  100.0%          LazyCompile: ~toRealPath node:internal/modules/cjs/loader:393:20
+      1  100.0%            LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:494:28
+      1    1.8%      LazyCompile: ~setupWarningHandler node:internal/bootstrap/pre_execution:142:29
+      1  100.0%        LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      1  100.0%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    1.8%      LazyCompile: ~setupPerfHooks node:internal/bootstrap/pre_execution:228:24
+      1  100.0%        LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      1  100.0%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    1.8%      LazyCompile: ~realpathSync node:fs:2408:22
+      1  100.0%        LazyCompile: ~toRealPath node:internal/modules/cjs/loader:393:20
+      1  100.0%          LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:494:28
+      1  100.0%            LazyCompile: ~resolveMainPath node:internal/modules/run_main:11:25
+      1    1.8%      LazyCompile: ~readSync node:fs:684:18
+      1  100.0%        LazyCompile: ~tryReadSync node:fs:429:21
+      1  100.0%          LazyCompile: ~readFileSync node:fs:450:22
+      1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1    1.8%      LazyCompile: ~pp$4.parseLiteral node:internal/deps/acorn/acorn/dist/acorn:2849:31
+      1  100.0%        LazyCompile: ~pp$4.parseExprAtom node:internal/deps/acorn/acorn/dist/acorn:2684:32
+      1  100.0%          LazyCompile: ~pp$1.parseImport node:internal/deps/acorn/acorn/dist/acorn:1768:30
+      1  100.0%            LazyCompile: ~pp$1.parseStatement node:internal/deps/acorn/acorn/dist/acorn:862:33
+      1    1.8%      LazyCompile: ~patchProcessObject node:internal/bootstrap/pre_execution:82:28
+      1  100.0%        LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      1  100.0%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    1.8%      LazyCompile: ~inspect node:internal/util/inspect:286:17
+      1  100.0%        LazyCompile: ~afterInspector node:internal/errors:752:17
+      1    1.8%      LazyCompile: ~formatWithOptions node:internal/util/inspect:1883:27
+      1  100.0%        LazyCompile: ~value node:internal/console/constructor:328:20
+      1  100.0%          LazyCompile: ~warn node:internal/console/constructor:363:7
+      1  100.0%            /usr/bin/node
+      1    1.8%      LazyCompile: ~formatRaw node:internal/util/inspect:796:19
+      1  100.0%        LazyCompile: ~formatValue node:internal/util/inspect:726:21
+      1  100.0%          LazyCompile: ~inspect node:internal/util/inspect:286:17
+      1  100.0%            LazyCompile: ~afterInspector node:internal/errors:752:17
+      1    1.8%      LazyCompile: ~debuglog node:internal/util/debuglog:71:18
+      1  100.0%        Function: ~<anonymous> node:net:1:1
+      1  100.0%          Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%            Function: ^nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1    1.8%      LazyCompile: ~createWritableStdioStream node:internal/bootstrap/switches/is_main_thread:41:35
+      1  100.0%        LazyCompile: ~getStderr node:internal/bootstrap/switches/is_main_thread:133:19
+      1  100.0%          LazyCompile: ~get node:internal/console/constructor:211:14
+      1  100.0%            LazyCompile: ~value node:internal/console/constructor:328:20
+      1    1.8%      LazyCompile: ~Duplex node:internal/streams/duplex:52:16
+      1  100.0%        LazyCompile: ~Socket node:net:283:16
+      1  100.0%          LazyCompile: ~WriteStream node:tty:85:21
+      1  100.0%            LazyCompile: ~createWritableStdioStream node:internal/bootstrap/switches/is_main_thread:41:35
+      1    1.8%      Function: ~<anonymous> node:internal/modules/esm/translators:1:1
+      1  100.0%        LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%          LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%            Function: ~<anonymous> node:internal/modules/esm/load:1:1
+      1    1.8%      Function: ~<anonymous> node:internal/deps/acorn/acorn/dist/acorn:5:19
+      1  100.0%        Function: ~<anonymous> node:internal/deps/acorn/acorn/dist/acorn:1:11
+      1  100.0%          Function: ~<anonymous> node:internal/deps/acorn/acorn/dist/acorn:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.8%      Function: ^finishNodeAt node:internal/deps/acorn/acorn/dist/acorn:3548:24
+      1  100.0%        Function: ^pp$7.finishNode node:internal/deps/acorn/acorn/dist/acorn:3558:29
+      1  100.0%          LazyCompile: ~pp$4.parseSubscript node:internal/deps/acorn/acorn/dist/acorn:2618:33
+      1  100.0%            LazyCompile: ~pp$4.parseSubscripts node:internal/deps/acorn/acorn/dist/acorn:2595:34
+      1    1.4%    LazyCompile: ~pp$6.currentVarScope node:internal/deps/acorn/acorn/dist/acorn:3507:34
+      1  100.0%      LazyCompile: ~prototypeAccessors.inClassStaticBlock.get node:internal/deps/acorn/acorn/dist/acorn:607:56
+      1  100.0%        LazyCompile: ~pp$4.checkUnreserved node:internal/deps/acorn/acorn/dist/acorn:3302:34
+      1  100.0%          LazyCompile: ~pp$1.parseImportSpecifiers node:internal/deps/acorn/acorn/dist/acorn:1785:40
+      1  100.0%            LazyCompile: ~pp$1.parseImport node:internal/deps/acorn/acorn/dist/acorn:1768:30
+      1    1.4%    LazyCompile: ~afterWriteDispatched node:internal/stream_base_commons:159:30
+      1  100.0%      LazyCompile: ~writeGeneric node:internal/stream_base_commons:151:22
+      1  100.0%        LazyCompile: ~Socket._writeGeneric node:net:769:42
+      1  100.0%          LazyCompile: ~Socket._write node:net:806:35
+      1  100.0%            LazyCompile: ~writeOrBuffer node:internal/streams/writable:365:23
+      1    1.4%    Function: ~<anonymous> node:internal/fs/promises:1:1
+      1  100.0%      LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%        LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%          Function: ~<anonymous> node:internal/modules/esm/get_source:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.4%    Function: ^pp$9.nextToken node:internal/deps/acorn/acorn/dist/acorn:4747:28
+      1  100.0%      LazyCompile: ~pp$9.next node:internal/deps/acorn/acorn/dist/acorn:4707:23
+      1  100.0%        LazyCompile: ~pp$1.parseVarStatement node:internal/deps/acorn/acorn/dist/acorn:1146:36
+      1  100.0%          LazyCompile: ~pp$1.parseStatement node:internal/deps/acorn/acorn/dist/acorn:862:33
+      1  100.0%            LazyCompile: ~pp$1.parseTopLevel node:internal/deps/acorn/acorn/dist/acorn:794:32
+
+     41   32.3%  /usr/lib/x86_64-linux-gnu/libc-2.31.so
+     32   78.0%    /usr/bin/node
+      3    9.4%      LazyCompile: ~toRealPath node:internal/modules/cjs/loader:393:20
+      3  100.0%        LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:494:28
+      3  100.0%          LazyCompile: ~resolveMainPath node:internal/modules/run_main:11:25
+      3  100.0%            LazyCompile: ~executeUserEntryPoint node:internal/modules/run_main:74:31
+      3    9.4%      LazyCompile: ~patchProcessObject node:internal/bootstrap/pre_execution:82:28
+      3  100.0%        LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      3  100.0%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      2    6.3%      LazyCompile: ~value node:internal/console/constructor:328:20
+      2  100.0%        LazyCompile: ~warn node:internal/console/constructor:363:7
+      2  100.0%          /usr/bin/node
+      2  100.0%            LazyCompile: ~writeOut node:internal/process/warning:46:18
+      2    6.3%      LazyCompile: ~resolve node:path:1091:10
+      2  100.0%        LazyCompile: ~patchProcessObject node:internal/bootstrap/pre_execution:82:28
+      2  100.0%          LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      2  100.0%            Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      2    6.3%      LazyCompile: ~debug node:internal/util/debuglog:76:15
+      2  100.0%        LazyCompile: ~logger node:internal/util/debuglog:96:18
+      1   50.0%          LazyCompile: ~hasEsmSyntax node:internal/modules/cjs/helpers:204:22
+      1  100.0%            LazyCompile: ~enrichCJSError node:internal/modules/esm/translators:152:24
+      1   50.0%          LazyCompile: ~Module._resolveLookupPaths node:internal/modules/cjs/loader:667:38
+      1  100.0%            LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:848:35
+      2    6.3%      LazyCompile: ~createWritableStdioStream node:internal/bootstrap/switches/is_main_thread:41:35
+      2  100.0%        LazyCompile: ~getStderr node:internal/bootstrap/switches/is_main_thread:133:19
+      2  100.0%          LazyCompile: ~get node:internal/console/constructor:211:14
+      2  100.0%            LazyCompile: ~value node:internal/console/constructor:328:20
+      2    6.3%      Function: ~<anonymous> node:internal/fs/rimraf:1:1
+      2  100.0%        LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2  100.0%          LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      2  100.0%            Function: ~<anonymous> node:internal/fs/promises:1:1
+      2    6.3%      /usr/bin/node
+      1   50.0%        LazyCompile: ~wordsRegexp node:internal/deps/acorn/acorn/dist/acorn:277:23
+      1  100.0%          LazyCompile: ~buildUnicodeData node:internal/deps/acorn/acorn/dist/acorn:3606:28
+      1  100.0%            Function: ~<anonymous> node:internal/deps/acorn/acorn/dist/acorn:5:19
+      1   50.0%        LazyCompile: ~pp$1.isLet node:internal/deps/acorn/acorn/dist/acorn:816:24
+      1  100.0%          LazyCompile: ~pp$1.parseStatement node:internal/deps/acorn/acorn/dist/acorn:862:33
+      1  100.0%            LazyCompile: ~pp$1.parseTopLevel node:internal/deps/acorn/acorn/dist/acorn:794:32
+      1    3.1%      LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1017:18
+      1  100.0%        LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1055:37
+      1  100.0%          LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1  100.0%            LazyCompile: ~Module.load node:internal/modules/cjs/loader:969:33
+      1    3.1%      LazyCompile: ~warn node:internal/console/constructor:363:7
+      1  100.0%        /usr/bin/node
+      1  100.0%          LazyCompile: ~writeOut node:internal/process/warning:46:18
+      1  100.0%            LazyCompile: ~onWarning node:internal/process/warning:79:19
+      1    3.1%      LazyCompile: ~setupWarningHandler node:internal/bootstrap/pre_execution:142:29
+      1  100.0%        LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      1  100.0%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    3.1%      LazyCompile: ~setupDebugEnv node:internal/bootstrap/pre_execution:194:23
+      1  100.0%        LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      1  100.0%          Function: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    3.1%      LazyCompile: ~realpathSync node:fs:2408:22
+      1  100.0%        LazyCompile: ~toRealPath node:internal/modules/cjs/loader:393:20
+      1  100.0%          LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:494:28
+      1  100.0%            LazyCompile: ~resolveMainPath node:internal/modules/run_main:11:25
+      1    3.1%      LazyCompile: ~pp$4.parseIdent node:internal/deps/acorn/acorn/dist/acorn:3331:29
+      1  100.0%        LazyCompile: ~pp$4.parseExprAtom node:internal/deps/acorn/acorn/dist/acorn:2684:32
+      1  100.0%          LazyCompile: ~pp$4.parseExprSubscripts node:internal/deps/acorn/acorn/dist/acorn:2581:38
+      1  100.0%            LazyCompile: ~pp$4.parseMaybeUnary node:internal/deps/acorn/acorn/dist/acorn:2528:34
+      1    3.1%      LazyCompile: ~nextTick node:internal/process/task_queues:104:18
+      1  100.0%        LazyCompile: ~onwrite node:internal/streams/writable:425:17
+      1  100.0%          LazyCompile: ~afterWriteDispatched node:internal/stream_base_commons:159:30
+      1  100.0%            LazyCompile: ~writeGeneric node:internal/stream_base_commons:151:22
+      1    3.1%      LazyCompile: ~Socket._writeGeneric node:net:769:42
+      1  100.0%        LazyCompile: ~Socket._write node:net:806:35
+      1  100.0%          LazyCompile: ~writeOrBuffer node:internal/streams/writable:365:23
+      1  100.0%            LazyCompile: ~_write node:internal/streams/writable:283:16
+      1    3.1%      LazyCompile: ~ReadableState node:internal/streams/readable:78:23
+      1  100.0%        LazyCompile: ~Readable node:internal/streams/readable:181:18
+      1  100.0%          LazyCompile: ~Duplex node:internal/streams/duplex:52:16
+      1  100.0%            LazyCompile: ~Socket node:net:283:16
+      1    3.1%      LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1  100.0%        LazyCompile: ~Module.load node:internal/modules/cjs/loader:969:33
+      1  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:757:24
+      1  100.0%            LazyCompile: ~executeUserEntryPoint node:internal/modules/run_main:74:31
+      1    3.1%      LazyCompile: ~Duplex node:internal/streams/duplex:52:16
+      1  100.0%        LazyCompile: ~Socket node:net:283:16
+      1  100.0%          LazyCompile: ~WriteStream node:tty:85:21
+      1  100.0%            LazyCompile: ~createWritableStdioStream node:internal/bootstrap/switches/is_main_thread:41:35
+      1    3.1%      Function: ~<anonymous> node:net:1:1
+      1  100.0%        Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%          Function: ^nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%            Function: ~<anonymous> node:tty:1:1
+      1    3.1%      Function: ~<anonymous> node:internal/modules/cjs/helpers:1:1
+      1  100.0%        LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%          LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%            Function: ~<anonymous> node:internal/source_map/source_map_cache:1:1
+      1    3.1%      Function: ~<anonymous> node:internal/fs/promises:1:1
+      1  100.0%        LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%          LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%            Function: ~<anonymous> node:internal/modules/esm/get_source:1:1
+
+     10    7.9%  /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+      9   90.0%    /usr/bin/node
+      1   11.1%      LazyCompile: ~value node:internal/console/constructor:328:20
+      1  100.0%        LazyCompile: ~warn node:internal/console/constructor:363:7
+      1  100.0%          /usr/bin/node
+      1  100.0%            LazyCompile: ~writeOut node:internal/process/warning:46:18
+      1   11.1%      LazyCompile: ~resolve node:path:1091:10
+      1  100.0%        LazyCompile: ~Module._initPaths node:internal/modules/cjs/loader:1227:29
+      1  100.0%          LazyCompile: ~initializeCJSLoader node:internal/bootstrap/pre_execution:422:29
+      1  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:23:36
+      1   11.1%      LazyCompile: ~realpathSync node:fs:2408:22
+      1  100.0%        LazyCompile: ~toRealPath node:internal/modules/cjs/loader:393:20
+      1  100.0%          LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:494:28
+      1  100.0%            LazyCompile: ~resolveMainPath node:internal/modules/run_main:11:25
+      1   11.1%      LazyCompile: ~readPackage node:internal/modules/cjs/loader:290:21
+      1  100.0%        LazyCompile: ~readPackageScope node:internal/modules/cjs/loader:321:26
+      1  100.0%          LazyCompile: ~shouldUseESMLoader node:internal/modules/run_main:26:28
+      1  100.0%            LazyCompile: ~executeUserEntryPoint node:internal/modules/run_main:74:31
+      1   11.1%      LazyCompile: ~pp$9.readToken node:internal/deps/acorn/acorn/dist/acorn:4759:28
+      1  100.0%        LazyCompile: ~pp$9.nextToken node:internal/deps/acorn/acorn/dist/acorn:4747:28
+      1  100.0%          LazyCompile: ~pp$9.next node:internal/deps/acorn/acorn/dist/acorn:4707:23
+      1  100.0%            LazyCompile: ~pp$1.parseImport node:internal/deps/acorn/acorn/dist/acorn:1768:30
+      1   11.1%      LazyCompile: ~pp$4.parseExprOps node:internal/deps/acorn/acorn/dist/acorn:2480:31
+      1  100.0%        LazyCompile: ~pp$4.parseMaybeConditional node:internal/deps/acorn/acorn/dist/acorn:2463:40
+      1  100.0%          LazyCompile: ~pp$4.parseMaybeAssign node:internal/deps/acorn/acorn/dist/acorn:2410:35
+      1  100.0%            LazyCompile: ~pp$1.parseVar node:internal/deps/acorn/acorn/dist/acorn:1277:27
+      1   11.1%      LazyCompile: ~Parser node:internal/deps/acorn/acorn/dist/acorn:489:31
+      1  100.0%        LazyCompile: ~parse node:internal/deps/acorn/acorn/dist/acorn:620:33
+      1  100.0%          LazyCompile: ~hasEsmSyntax node:internal/modules/cjs/helpers:204:22
+      1  100.0%            LazyCompile: ~enrichCJSError node:internal/modules/esm/translators:152:24
+      1   11.1%      Function: ~<anonymous> node:internal/fs/promises:1:1
+      1  100.0%        LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%          LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%            Function: ~<anonymous> node:internal/modules/esm/get_source:1:1
+      1   11.1%      /usr/bin/node
+      1  100.0%        LazyCompile: ~compileFunction node:vm:308:25
+      1  100.0%          LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1017:18
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1055:37
+
+      4    3.1%  /usr/lib/x86_64-linux-gnu/libpthread-2.31.so
+      1   25.0%    /usr/bin/node
+      1  100.0%      LazyCompile: ~onWarning node:internal/process/warning:79:19
+      1  100.0%        LazyCompile: ~emit node:events:340:44
+      1  100.0%          LazyCompile: ~emitWarningSync node:internal/process/warning:156:25
+      1  100.0%            LazyCompile: ~enrichCJSError node:internal/modules/esm/translators:152:24
+
