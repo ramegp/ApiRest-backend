@@ -1,0 +1,112 @@
+[
+	{
+		"title": "Salamin",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-09T22:26:41.443Z",
+		"codigo": "ES-55",
+		"price": 123.45,
+		"thumbnail": "https://cdn0.iconfinder.com/data/icons/meat-product/96/Meat-06-512.png",
+		"id": 1
+	},
+	{
+		"title": "Casco",
+		"description": "casco para bici",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 45,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-512.png",
+		"id": 2
+	},
+	{
+		"title": "Cuaderno",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 123.45,
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo2-04-512.png",
+		"id": 3
+	},
+	{
+		"title": "Lapiz",
+		"description": "Lapiz color azul",
+		"stock": 400,
+		"timestamp": "2021-09-09T22:03:05.484Z",
+		"codigo": "ES-55",
+		"price": 100,
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/basic-flat-icon-set/128/pencil-512.png",
+		"id": 4
+	},
+	{
+		"title": "Goma",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-09T22:01:28.678Z",
+		"codigo": "ES-55",
+		"price": 10.45,
+		"thumbnail": "https://cdn0.iconfinder.com/data/icons/graphic-design-tools-5/128/_eraser-512.png",
+		"id": 5
+	},
+	{
+		"title": "pan dulce",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 45,
+		"thumbnail": "https://cdn2.iconfinder.com/data/icons/bakery-kitchen-3/512/soda-bread-baking-512.png",
+		"id": 6
+	},
+	{
+		"title": "Espada",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 23,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Sword-512.png",
+		"id": 7
+	},
+	{
+		"title": "Zubeldia",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 100,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Armor-512.png",
+		"id": 8
+	},
+	{
+		"title": "Casco",
+		"description": "Escuadra de color rosa",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 45,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-512.png",
+		"id": 9
+	},
+	{
+		"title": "Messi",
+		"description": "Jugador de futbol!!!",
+		"stock": 400,
+		"timestamp": "2021-09-01T23:18:43.342Z",
+		"codigo": "ES-55",
+		"price": 45,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-512.png",
+		"id": 10
+	},
+	{
+		"title": "Messi",
+		"description": "Jugador de futbol",
+		"stock": "1",
+		"timestamp": "2021-09-09T20:20:36.898Z",
+		"codigo": "JU-10",
+		"price": "3000",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Helmet.jpg-512.png",
+		"id": 11
+	}
+]

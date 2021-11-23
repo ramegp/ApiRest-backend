@@ -1,0 +1,112 @@
+Started phase 0, duration: 1s @ 08:48:38(-0300) 2021-11-14
+Report @ 08:48:48(-0300) 2021-11-14
+Elapsed time: 10 seconds
+  Scenarios launched:  50
+  Scenarios completed: 0
+  Requests completed:  51
+  Mean response/sec: 9.03
+  Response time (msec):
+    min: 1
+    max: 5884
+    median: 2
+    p95: 69.3
+    p99: 5825.9
+  Codes:
+    200: 51
+
+Report @ 08:48:58(-0300) 2021-11-14
+Elapsed time: 20 seconds
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  69
+  Mean response/sec: 4.39
+  Response time (msec):
+    min: 1
+    max: 9849
+    median: 5372
+    p95: 8712.3
+    p99: 9716
+  Codes:
+    200: 69
+  Errors:
+    ETIMEDOUT: 20
+
+Report @ 08:49:08(-0300) 2021-11-14
+Elapsed time: 30 seconds
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  127
+  Mean response/sec: 14.55
+  Response time (msec):
+    min: 260
+    max: 4025
+    median: 1034
+    p95: 2850.8
+    p99: 3733.9
+  Codes:
+    200: 127
+
+Report @ 08:49:18(-0300) 2021-11-14
+Elapsed time: 40 seconds
+  Scenarios launched:  0
+  Scenarios completed: 0
+  Requests completed:  522
+  Mean response/sec: 52.62
+  Response time (msec):
+    min: 156
+    max: 750
+    median: 204.5
+    p95: 676.4
+    p99: 719.3
+  Codes:
+    200: 522
+
+Report @ 08:49:28(-0300) 2021-11-14
+Elapsed time: 50 seconds
+  Scenarios launched:  0
+  Scenarios completed: 29
+  Requests completed:  469
+  Mean response/sec: 45.98
+  Response time (msec):
+    min: 154
+    max: 937
+    median: 199
+    p95: 760.5
+    p99: 902.1
+  Codes:
+    200: 469
+
+Report @ 08:49:29(-0300) 2021-11-14
+Elapsed time: 50 seconds
+  Scenarios launched:  0
+  Scenarios completed: 1
+  Requests completed:  1
+  Mean response/sec: NaN
+  Response time (msec):
+    min: 216
+    max: 216
+    median: 216
+    p95: 216
+    p99: 216
+  Codes:
+    200: 1
+
+All virtual users finished
+Summary report @ 08:49:29(-0300) 2021-11-14
+  Scenarios launched:  50
+  Scenarios completed: 30
+  Requests completed:  1239
+  Mean response/sec: 24.53
+  Response time (msec):
+    min: 1
+    max: 9849
+    median: 215
+    p95: 2467.7
+    p99: 7028.3
+  Scenario counts:
+    0: 50 (100%)
+  Codes:
+    200: 1239
+  Errors:
+    ETIMEDOUT: 20
+
