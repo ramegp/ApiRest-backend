@@ -10,6 +10,7 @@ import { jwt, authJWT, generateAuthToken } from '../middleware/log';
 import { UsuarioPassport, UsuarioPassportMongo } from "../utils/Interfaces";
 import { loggerError, loggerInfo, loggerWarn } from "../helpers/logHandler";
 import { transporter } from "../helpers/emailHandler";
+import { client } from "../helpers/twilioHandler";
 
 const router = express.Router();
 
@@ -67,6 +68,15 @@ router.post('/in', (req: express.Request, res: express.Response) => {
                         }
                         loggerInfo.info(`Se envio email al usuario ${user[0].user}`)
                     })
+                    client.messages.create({
+                        body: `Hola inicio de sesion ${user[0].user}`,
+                        from: '+18068081081',
+                        //@ts-ignore
+                        to: process.env.telefono?.toString()
+                  })
+                  .then(message => loggerInfo.info(`Se envio sms al usuario ${user[0].user} con idSMS ${message.sid}`))
+                  .catch(console.log)
+
                     res.header("x-auth-token", token).json({
                         username: user[0].user,
                         token
