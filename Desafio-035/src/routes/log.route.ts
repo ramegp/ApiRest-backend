@@ -11,6 +11,7 @@ import { UsuarioPassport, UsuarioPassportMongo } from "../utils/Interfaces";
 import { loggerError, loggerInfo, loggerWarn } from "../helpers/logHandler";
 import { transporter } from "../helpers/emailHandler";
 import { client } from "../helpers/twilioHandler";
+import { credencialesTwilio } from "../config";
 
 const router = express.Router();
 
@@ -70,12 +71,21 @@ router.post('/in', (req: express.Request, res: express.Response) => {
                     })
                     client.messages.create({
                         body: `Hola inicio de sesion ${user[0].user}`,
-                        from: '+18068081081',
+                        from: credencialesTwilio.number,
                         //@ts-ignore
                         to: process.env.telefono?.toString()
                   })
                   .then(message => loggerInfo.info(`Se envio sms al usuario ${user[0].user} con idSMS ${message.sid}`))
                   .catch(console.log)
+
+                  client.messages.create({
+                    body: `Has iniciado sesion`,
+                    mediaUrl: ['https://img.europapress.es/fotoweb/fotonoticia_20191227171120_1200.jpg'],
+                    from: 'whatsapp:+14155238886',
+                    to: `whatsapp:${process.env.telefono}`
+                    })
+                    .then(message => loggerInfo.info(`Se envio whatsapp al usuario ${user[0].user}  ${message.sid}`))
+                    .catch(console.log) 
 
                     res.header("x-auth-token", token).json({
                         username: user[0].user,
