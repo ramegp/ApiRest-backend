@@ -62,17 +62,32 @@ export class DBCart {
 
     addProdCartUser = async (email:String,prod_to_add:any) => {
         let db = this.cart_connect();
-        let user_cart_search = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false}]},{$push:{productos : prod_to_add}})
+        
+        let user_cart_update = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false},{productos: {$elemMatch :{title:prod_to_add.title}}}]},{"$inc":{"productos.$[elem].cantidad":prod_to_add.cantidad}},{arrayFilters:[{"elem.title":{$eq:prod_to_add.title}}]})
+        if (user_cart_update.nModified == 0) {
+            //no existe el producto en el carrito por lo tanto lo agrego.
+            let user_cart_add = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false}]},{$push:{productos : prod_to_add}})
+            this.cart_disconnect()
+            return user_cart_add
+        }
+        
         this.cart_disconnect()
-        return user_cart_search
+        return user_cart_update
     }
 
     buscando = async (email:String,prod_to_add:any) => {
         let db = this.cart_connect();
         
-        let user_cart_search = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false},{productos: {$elemMatch :{title:prod_to_add.title}}}]},{$set:{$inc:{productos:{cantidad: prod_to_add.cantidad}}}})
+        let user_cart_update = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false},{productos: {$elemMatch :{title:prod_to_add.title}}}]},{"$set":{"productos.$[elem].cantidad":prod_to_add.cantidad}},{arrayFilters:[{"elem.title":{$eq:prod_to_add.title}}]})
+        if (user_cart_update.nModified == 0) {
+            //no existe el producto en el carrito por lo tanto lo agrego.
+            let user_cart_add = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false}]},{$push:{productos : prod_to_add}})
+            this.cart_disconnect()
+            return user_cart_add
+        }
+        
         this.cart_disconnect()
-        return user_cart_search
+        return user_cart_update
     }
     /* addProdCartUser = () => {
         let db = this.cart_connect();

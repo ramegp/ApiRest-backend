@@ -2,6 +2,7 @@ import express = require("express");
 import { Db } from "mongodb";
 import { Archivo } from "../utils/Archivo";
 import { DBCart } from "../utils/DBCart";
+import { DBMongo } from "../utils/DBMongo";
 import { HandleCarts } from "../utils/HandleCarts";
 let __path = require('path');
 
@@ -30,15 +31,30 @@ router.get('/:idUser/all',(req: express.Request, res: express.Response)=>{
 
 router.put('/:idUser',(req: express.Request, res: express.Response)=>{
     if (req.query.idProd) {
-        let DB = new DBCart();
+        
+        let { idUser } = req.params
+        
+        let { cantidad } = req.query
+        
+        let DBProductos = new DBMongo()
+        
+        DBProductos.findById(req.query.idProd.toString()).then((data:any)=>{
+            
+            let DB = new DBCart();
+            let prod_add_to_cart = {
+                title:data[0].title,
+                //@ts-ignore
+                cantidad:parseInt(cantidad),
+                price:data[0].price
+            }
+            
+            DB.addProdCartUser(idUser,prod_add_to_cart).then((data:any)=>{
+                console.log('entre');
+                
+                res.json({data})})
 
-        let prod_add_to_cart = {
-            title:req.query.idProd,
-            cantidad:1,
-            price:20
-        }
+        })
 
-        DB.addProdCartUser(req.params.idUser,prod_add_to_cart).then((data:any)=>{res.json({data})})
         
     } else {
         res.json({error:"No hay id prod"})
@@ -61,7 +77,7 @@ router.put('/:idUser/find',(req: express.Request, res: express.Response)=>{
 
         let prod_add_to_cart = {
             title:req.query.idProd,
-            cantidad:5,
+            cantidad:20,
             price:20
         }
 
