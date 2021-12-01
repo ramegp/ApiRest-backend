@@ -1,5 +1,6 @@
 import express = require("express");
 import { Db } from "mongodb";
+import { notificacionCompra } from "../helpers/notificacion";
 import { Archivo } from "../utils/Archivo";
 import { DBCart } from "../utils/DBCart";
 import { DBMongo } from "../utils/DBMongo";
@@ -28,6 +29,32 @@ router.get('/:idUser/all',(req: express.Request, res: express.Response)=>{
     DB.findAllCartUser(user).then((data:any)=>{res.json(data)})
 });
 
+router.get('/:idUser/buy',(req: express.Request, res: express.Response)=>{
+    let user = req.params.idUser;
+
+    let DB = new DBCart()
+    DB.buscando(user).then((data:any)=>{
+        console.log(data);
+        
+        let productos = ``;
+        let precio_total = 0
+        for (const p of data[0].productos) {
+            precio_total += p.price;
+            let aux = `producto ${p.title} cantidad ${p.cantidad}`;
+            productos += aux;
+        }
+
+        let detalle_compra = {
+            fecha: new Date(),
+            user:user,
+            productos:productos,
+            total:precio_total
+        }
+        notificacionCompra(detalle_compra)
+        res.json(data)
+    })
+    
+});
 
 router.put('/:idUser',(req: express.Request, res: express.Response)=>{
     if (req.query.idProd) {
@@ -71,22 +98,6 @@ router.delete('/:idUser',(req: express.Request, res: express.Response)=>{
     }
 })
 
-router.put('/:idUser/find',(req: express.Request, res: express.Response)=>{
-    if (req.query.idProd) {
-        let DB = new DBCart();
-
-        let prod_add_to_cart = {
-            title:req.query.idProd,
-            cantidad:20,
-            price:20
-        }
-
-        DB.buscando(req.params.idUser,prod_add_to_cart).then((data:any)=>{res.json({data})})
-        
-    } else {
-        res.json({error:"No hay id prod"})
-    }
-})
 
 router.post('/:idUser/finalizar',(req: express.Request, res: express.Response)=>{
     console.log(`${req.params.idUser}`);
@@ -94,40 +105,9 @@ router.post('/:idUser/finalizar',(req: express.Request, res: express.Response)=>
     DB.finalizoCartUser(req.params.idUser).then((data:any)=>{res.json({data})})
 })
 
-router.post('/listar/:id?',(req: express.Request, res: express.Response)=>{
-    let id_show = parseInt(req.params.id);
-    let user = req.body.user;
-    //console.log(req.body)
-    if ( isNaN(id_show) ) {
-        res.json({product:carts.searchCartByUser(user)?.products()})
-    } else {
-        res.json({product:carts.searchCartByUser(user)?.searchProductId(id_show)})
-    }
-})
 
-router.post('/agregar/:id',(req: express.Request, res: express.Response)=>{
-    let id_produc = parseInt(req.params.id);
-    let user = req.body.user;
-    
-    if (isNaN(id_produc)) {
-        res.json({data:"Error al ingresar id"})
-    } else {
-        let products = new Archivo("productos.txt");
-        res.json({product:carts.addProductToCart(user,products.searchProductId(id_produc))}) 
-    }
 
-})
 
-router.post('/borrar/:id',(req: express.Request, res: express.Response)=>{
-    let id_delete = parseInt(req.params.id)
-    let user = req.body.user
-
-    if (isNaN(id_delete)) {
-        res.json({data:"Error al ingresar id"})
-    } else {
-        res.json({delete:carts.deleteProductToCart(user,id_delete)}) 
-    }
-})
 
 
 module.exports = router

@@ -75,19 +75,16 @@ export class DBCart {
         return user_cart_update
     }
 
-    buscando = async (email:String,prod_to_add:any) => {
+    buscando = async (email:String) => {
         let db = this.cart_connect();
         
-        let user_cart_update = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false},{productos: {$elemMatch :{title:prod_to_add.title}}}]},{"$set":{"productos.$[elem].cantidad":prod_to_add.cantidad}},{arrayFilters:[{"elem.title":{$eq:prod_to_add.title}}]})
-        if (user_cart_update.nModified == 0) {
-            //no existe el producto en el carrito por lo tanto lo agrego.
-            let user_cart_add = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false}]},{$push:{productos : prod_to_add}})
-            this.cart_disconnect()
-            return user_cart_add
-        }
-        
+        let user_cart = await db?.CarritoModel.find({$and:[{titular:email},{finalizo:false}]})
+        let user_cart_finalizado = await db?.CarritoModel.updateOne({$and:[{titular:email},{finalizo:false}]}, {
+            $set: {
+                finalizo : true
+            }})
         this.cart_disconnect()
-        return user_cart_update
+        return user_cart
     }
     /* addProdCartUser = () => {
         let db = this.cart_connect();

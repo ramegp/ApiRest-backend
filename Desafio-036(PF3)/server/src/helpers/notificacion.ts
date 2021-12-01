@@ -21,3 +21,17 @@ export const notificacionUsuarioRegistrado = (user:UsuarioPassport) => {
         .then(message => loggerInfo.info(`Se envio whatsapp al usuario ${user.user}  ${message.sid}`))
         .catch(console.log) 
 }
+
+export const notificacionCompra = (detalle:any) => {
+    client.messages.create({
+        body: `Compra: ${detalle.user}
+        fecha:${detalle.fecha}
+        productos: ${detalle.productos}
+        total:$ ${detalle.total}`,
+        mediaUrl: ['https://img.europapress.es/fotoweb/fotonoticia_20191227171120_1200.jpg'],
+        from: 'whatsapp:+14155238886',
+        to: `whatsapp:${administrador.phone}`
+        })
+        .then(message => loggerInfo.info(`Se envio whatsapp al administrador, notificacion de compra`))
+        .catch(console.log)
+}
