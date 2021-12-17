@@ -1,8 +1,9 @@
+import { HandlePersistenciaProductos } from "./AbstracClass";
 import { MsjChat, Producto, UsuarioPassport } from "./Interfaces";
 
 let instance_class_mongodb: DBMongo | null = null
 
-export class DBMongo {
+export class DBMongo implements HandlePersistenciaProductos {
     prod_connect = require('../database/db-products').connect
     prod_disconnect = require('../database/db-products').disconnect;
     msg_connect = require('../database/db-messages').connect;
@@ -66,7 +67,7 @@ export class DBMongo {
         }
     }
 
-    findByStock = async (stock_max: number, stock_min: number) => {
+    findByStock = async (stock_max: number, stock_min: number =0) => {
         //Pasamos primero el precio mayor 
 
         if (stock_min <= stock_max) {

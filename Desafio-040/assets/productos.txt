@@ -2,7 +2,7 @@
 	{
 		"title": "Salamin",
 		"description": "Escuadra de color rosa",
-		"stock": 400,
+		"stock": 40,
 		"timestamp": "2021-09-09T22:26:41.443Z",
 		"codigo": "ES-55",
 		"price": 123.45,
@@ -12,7 +12,7 @@
 	{
 		"title": "Casco",
 		"description": "casco para bici",
-		"stock": 400,
+		"stock": 20,
 		"timestamp": "2021-09-01T23:18:43.342Z",
 		"codigo": "ES-55",
 		"price": 45,
@@ -74,7 +74,7 @@
 		"description": "Escuadra de color rosa",
 		"stock": 400,
 		"timestamp": "2021-09-01T23:18:43.342Z",
-		"codigo": "ES-55",
+		"codigo": "ES-4",
 		"price": 100,
 		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Armor-512.png",
 		"id": "8"
@@ -102,7 +102,7 @@
 	{
 		"title": "Messi",
 		"description": "Jugador de futbol",
-		"stock": "1",
+		"stock": 1,
 		"timestamp": "2021-09-09T20:20:36.898Z",
 		"codigo": "JU-10",
 		"price": "3000",

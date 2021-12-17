@@ -1,9 +1,10 @@
 import { isArrowFunction } from "typescript";
+import { HandlePersistenciaProductos } from "./AbstracClass";
 import { Producto } from "./Interfaces";
 
 let instance_class_archivo: Archivo | null = null
 
-export class Archivo {
+export class Archivo implements HandlePersistenciaProductos {
     private filePath: string;
     private fs = require('fs');
 
@@ -144,8 +145,107 @@ export class Archivo {
             return 'error, no existe el id'
         }
     }
+    findByName = async (name: string) => {
+       return await this.getAllProducts().then((result: any) => {
+            return new Promise((resolve,reject)=>{
+                resolve(result.filter((p:any)=>{return p.title === name}))
+            })
+        }).catch((err: any) => {
+            return new Promise((resolve,reject)=>{
+                resolve([])
+            })
+        });
+    }
+
+    findByCode = async (code: string) => {
+        return await this.getAllProducts().then((result: any) => {
+            return new Promise((resolve,reject)=>{
+                resolve(result.filter((p:any)=>{return p.codigo === code}))
+            })
+        }).catch((err: any) => {
+            return new Promise((resolve,reject)=>{
+                resolve([])
+            })
+        });
+    }
+
+    findByPrice = async (price_max: number, price_min: number = 0) => {
+        //Pasamos primero el precio mayor 
+        
+        if (price_min <= price_max) {
+            return await this.getAllProducts().then((result: any) => {
+                return new Promise((resolve,reject)=>{
+                    resolve(result.filter((p:any)=>{
+                        return ((p.price <= price_max)&&(p.price >= price_min))
+                    }))
+                })
+            }).catch((err: any) => {
+                return new Promise((resolve,reject)=>{
+                    resolve([])
+                })
+            });
+            
+
+        } else {
+            return new Promise((resolve,reject)=>{
+                resolve([])
+            })
+        }
+    }
+
+    findByStock = async (stock_max: number, stock_min: number=0) => {
+        //Pasamos primero el precio mayor 
+
+        if (stock_min <= stock_max) {
+
+            return await this.getAllProducts().then((result: any) => {
+                return new Promise((resolve,reject)=>{
+                    resolve(result.filter((p:any)=>{
+                        return ((p.stock <= stock_max)&&(p.stock >= stock_min))
+                    }))
+                })
+            }).catch((err: any) => {
+                return new Promise((resolve,reject)=>{
+                    resolve([])
+                })
+            });
+            
+
+        } else {
+            return new Promise((resolve,reject)=>{
+                resolve([])
+            })
+        }
+    }
+
+    findByPriceStock = async (price_max: number, price_min: number, stock_max: number, stock_min: number) => {
+        if ((stock_min <= stock_max) && (price_min <= price_max)) {
+
+            return await this.getAllProducts().then((result: any) => {
+                return new Promise((resolve,reject)=>{
+                    resolve(result.filter((p:any)=>{
+                        return ((p.stock <= stock_max)&&(p.stock >= stock_min)&&(p.price <= price_max)&&(p.price >= price_min))
+                    }))
+                })
+            }).catch((err: any) => {
+                return new Promise((resolve,reject)=>{
+                    resolve([])
+                })
+            });
+            
+
+        } else {
+            return new Promise((resolve,reject)=>{
+                resolve([])
+            })
+        }
+    }
+
 }
 
 /* const a1 = Archivo.getInstanceClassArchivo()
 const a2 = Archivo.getInstanceClassArchivo()
 console.log("Equals", a1 === a2); */
+const a1 = Archivo.getInstanceClassArchivo()
+a1.findByPriceStock(50,10,21,0).then((result)=>{console.log(result);
+})
